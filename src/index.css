@@ -1,0 +1,118 @@
+@import "tailwindcss";
+/* Pagination */
+.swiper-pagination-bullet {
+  background: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2563eb !important;
+  width: 22px !important;
+  border-radius: 20px !important;
+}
+
+/* Navigation Buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  background: white;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  color: #2563eb !important;
+}
+
+/* Arrow Icon */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  width: 56px !important;
+  height: 56px !important;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  color: #2563eb !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+@keyframes success-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-success-scroll {
+  animation: success-scroll 30s linear infinite;
+}
+
+.oracleSwiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+.oracleSwiper .swiper-pagination {
+  margin-top: 30px;
+}
+
+.oracleSwiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+}
+
+.oracleSwiper .swiper-pagination-bullet-active {
+  width: 32px;
+  border-radius: 999px;
+  background: #22d3ee;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.logo-float {
+  animation: floatLogo 3s ease-in-out infinite;
+}
