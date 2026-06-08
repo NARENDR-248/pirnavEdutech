@@ -13,6 +13,9 @@ import FAQ from "./FAQ";
 import OracleCourses from "./OracleCourses";
 import SuccessStats from "../components/home/SuccessStats";
 import PlacementPartners from "../components/home/PlacementPartners";
+import WhatsAppButton from "../components/common/WhatsAppButton";
+import PopupEnroll from "./PopupEnroll";
+import EnquiryWidget from "./EnquiryWidget";
 
 function Home() {
   return (
@@ -20,7 +23,6 @@ function Home() {
       <Navbar />
 
       <Hero />
-      
 
       <EnrollmentForm />
 
@@ -41,6 +43,8 @@ function Home() {
       <FAQ />
 
       <Footer />
+      <WhatsAppButton />
+      <EnquiryWidget />
     </>
   );
 }

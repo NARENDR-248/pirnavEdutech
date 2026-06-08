@@ -19,6 +19,7 @@ import AiMain from "../components/courses/Ai/AiMain";
 import ScrollToTop from "../components/common/ScrollToTop";
 import NotFound from "../pages/NotFound";
 import Enroll from "../pages/Enroll";
+import EnquiryWidget from "../pages/EnquiryWidget";
 
 const AppRoutes = () => {
   return (
@@ -50,6 +51,7 @@ const AppRoutes = () => {
         <Route path="/AI-course" element={<AiMain />} />
         <Route path="/enroll" element={<Enroll />} />
       </Routes>
+      <EnquiryWidget />
     </BrowserRouter>
   );
 };

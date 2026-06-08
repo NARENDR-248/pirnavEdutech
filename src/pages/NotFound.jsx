@@ -76,7 +76,7 @@ function NotFound() {
         </motion.h1>
 
         {/* Heading */}
-        <h2 className="text-white text-4xl md:text-5xl font-bold mt-4">
+        <h2 className="text-white text-4xl md:text-5xl font-bold mt-4 ">
           Oops! Page Not Found
         </h2>
 
@@ -105,6 +105,7 @@ function NotFound() {
               hover:scale-105
               transition-all
               duration-300
+              cursor-pointer
               "
             >
               <FaHome />
@@ -126,6 +127,7 @@ function NotFound() {
               hover:bg-white/20
               transition-all
               duration-300
+              cursor-pointer
               "
             >
               <FaBookOpen />

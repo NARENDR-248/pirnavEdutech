@@ -1,5 +1,12 @@
 @import "tailwindcss";
 /* Pagination */
+
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 .swiper-pagination-bullet {
   background: #94a3b8 !important;
   opacity: 1 !important;
@@ -115,4 +122,31 @@
 
 .logo-float {
   animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Smooth Infinite Scroll */
+.marquee {
+  animation: scroll 60s linear infinite;
+}
+
+.marquee:hover {
+  animation-duration: 60s; /* slows instead of stopping */
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
