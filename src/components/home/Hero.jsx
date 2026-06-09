@@ -13,7 +13,7 @@ import PrinavHero2 from "../../assets/pirnavHero2.png";
 import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
-  const title = ["Learn", "Future Skills", "Build Your Dream Career"];
+  const title = ["An Ecosystem for High Achievers"];
 
   const containerVariants = {
     hidden: {},
@@ -55,10 +55,7 @@ const Hero = () => {
       name: "Infosys",
       logo: "https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg",
     },
-    {
-      name: "TCS",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg",
-    },
+
     {
       name: "Accenture",
       logo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg",
@@ -198,17 +195,17 @@ const Hero = () => {
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-wrap gap-5 mt-10">
+            <div className="flex flex-wrap gap-4 mt-8">
               <Link to="/courses">
-                <button className="group px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-xl hover:scale-105 transition">
+                <button className="group inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                   Explore Courses
-                  <FaArrowRight className="inline ml-2 group-hover:translate-x-1 transition" />
+                  <FaArrowRight className="ml-2 text-xs group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
 
-              <button className="flex items-center gap-3 px-8 py-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl text-white hover:bg-white/20 transition">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                  <FaPlay />
+              <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/10 backdrop-blur-xl text-sm font-medium text-white hover:bg-white/20 transition-all duration-300">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <FaPlay className="text-xs" />
                 </div>
                 Watch Demo
               </button>
@@ -305,7 +302,8 @@ const Hero = () => {
               viewport={{ once: true }}
               className="text-white text-4xl md:text-5xl font-bold mt-4"
             >
-              Top Global Companies
+              Distinguished Organizations
+
             </motion.h2>
 
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto">

@@ -165,7 +165,6 @@ const PythonCourseHero = () => {
       <div className="absolute inset-0 border-l border-slate-700/50" />
       
       <PythonCareerRoles/>
-      <PythonMentors/>
       <Pythonprojects/>
       <Pythoncurriculum/>
       <Pythontestimonials/>

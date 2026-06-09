@@ -72,13 +72,18 @@ function EnrollmentForm() {
   ];
 
   return (
-    <section className="relative py-24 bg-gradient-to-br from-white via-slate-50 to-cyan-50 overflow-hidden">
+    <section className="relative overflow-hidden py-24 bg-gradient-to-br from-slate-50 via-white to-cyan-50">
       
       {/* Background Glow */}
-      <div className="absolute inset-0">
-        <div className="absolute -top-40 left-0 w-[400px] h-[400px] bg-cyan-400/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[120px]" />
-      </div>
+      <div className="absolute inset-0 overflow-hidden">
+
+  <div className="absolute top-[-10%] left-[-5%] h-[500px] w-[500px] rounded-full bg-cyan-400/20 blur-[180px]" />
+
+  <div className="absolute bottom-[-10%] right-[-5%] h-[500px] w-[500px] rounded-full bg-blue-500/20 blur-[180px]" />
+
+  <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40" />
+
+</div>
 
       <div className="relative max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -95,9 +100,9 @@ function EnrollmentForm() {
             </span>
 
             <h2 className="mt-8 text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-slate-900">
-              Launch Your
+              Secure Your Role In 
               <span className="block bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                Tech Career
+                The Technology Sector
               </span>
             </h2>
 

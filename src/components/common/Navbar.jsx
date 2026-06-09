@@ -36,23 +36,24 @@ function Navbar() {
   return (
     <>
       <div className="bg-slate-950 text-slate-300">
-        <div className="max-w-7xl mx-auto flex h-12 items-center justify-between px-4 text-sm md:px-6">
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <FaPhoneAlt className="text-sky-400" />
-              <span>+91 99510 29900</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaEnvelope className="text-sky-400" />
-              <span>info@pirnavedutech.com</span>
-            </div>
-          </div>
-          <Link
-            to="/enroll"
-            className="inline-flex items-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition duration-300 hover:bg-sky-400"
-          >
-            Apply Now
-          </Link>
+  <div className="max-w-7xl mx-auto flex h-12 items-center justify-between px-4 text-sm md:px-6">
+
+    <span className="hidden md:block">
+      Welcome to Pirnav EduTech
+    </span>
+
+    <div className="flex items-center gap-6">
+      <div className="flex items-center gap-2">
+        <FaPhoneAlt className="text-sky-400" />
+        <span>+91 99510 29900</span>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <FaEnvelope className="text-sky-400" />
+        <span>info@pirnavedutech.com</span>
+      </div>
+    </div>
+         
         </div>
       </div>
 
@@ -378,12 +379,7 @@ function Navbar() {
             </nav>
 
             <div className="hidden items-center gap-3 lg:flex">
-              <Link
-                to="/login"
-                className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
-              >
-                Login
-              </Link>
+           
               <Link
                 to="/enroll"
                 className="rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-xl shadow-slate-900/10 transition duration-300 hover:bg-slate-800"

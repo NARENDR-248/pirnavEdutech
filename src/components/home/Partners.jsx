@@ -6,7 +6,6 @@ const LOGOS = [
   "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
   "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
   "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/c/cd/Meta_Platforms_Inc._logo.svg",
   "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
   "https://upload.wikimedia.org/wikipedia/commons/9/96/Sass_Logo_Color.svg",
   "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
@@ -90,10 +89,10 @@ export default function Partners() {
       {/* Heading */}
       <div className="text-center mb-16 relative z-10">
         <h2 className="text-4xl md:text-5xl font-semibold text-white">
-          Trusted by world-class teams
+          Industry-Relevent Curriculum
         </h2>
         <p className="text-gray-400 mt-3">
-          Built with modern technologies
+          Built around current market technologies
         </p>
       </div>
 

@@ -4,13 +4,20 @@ import { FaTimes } from "react-icons/fa";
 function EnquiryWidget() {
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(true);
-    }, 3000);
+ useEffect(() => {
+  const showTimer = setTimeout(() => {
+    setShow(true);
+  }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  const hideTimer = setTimeout(() => {
+    setShow(false);
+  }, 13000); // 3s delay + 10s visible
+
+  return () => {
+    clearTimeout(showTimer);
+    clearTimeout(hideTimer);
+  };
+}, []);
 
   if (!show) return null;
 

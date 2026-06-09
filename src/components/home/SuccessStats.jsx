@@ -84,7 +84,7 @@ function SuccessStats() {
           </span>
 
           <h2 className="mt-4 text-4xl md:text-6xl font-extrabold text-white">
-            Trusted By Thousands
+            Adopted By Thousands
           </h2>
 
           <p className="mt-5 text-slate-300 max-w-2xl mx-auto">

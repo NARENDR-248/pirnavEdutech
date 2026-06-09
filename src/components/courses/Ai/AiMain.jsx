@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaBrain, FaRobot } from "react-icons/fa";
+
+import AiCourse from "./AiCourse";
+import AiMentores from "./AiMentores";
+import AiCurriculum from "./AiCurriculum";
+
+
 import Navbar from "../../common/Navbar";
 import Footer from "../../common/Footer";
 
@@ -72,7 +78,11 @@ const AiMain = () => {
         ))}
       </section>
     </div>
-    <Footer />
+    <AiCourse/>
+    <AiMentores/>
+    <AiCurriculum />
+    <Footer/>
+
         </> 
   );
 };

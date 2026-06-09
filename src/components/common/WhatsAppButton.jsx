@@ -44,9 +44,6 @@ function WhatsAppButton() {
     >
       <FaWhatsapp className="text-3xl" />
 
-      <span className="hidden md:block font-semibold">
-        Chat With Us
-      </span>
     </motion.a>
   );
 }

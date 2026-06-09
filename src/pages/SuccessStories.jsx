@@ -58,7 +58,7 @@ function SuccessStories() {
           </p>
 
           <h2 className="text-5xl md:text-6xl font-extrabold text-white">
-            Student Success Stories
+            Placement Outcomes
           </h2>
 
           <p className="text-gray-300 mt-5 text-lg">

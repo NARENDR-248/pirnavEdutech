@@ -1,69 +1,230 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import {
+  Rocket,
+  Brain,
+  ShoppingCart,
+  MessageSquare,
+  ArrowRight,
+} from "lucide-react";
+
+import { FaGithub } from "react-icons/fa";
 
 const projects = [
   {
     title: "AI Resume Analyzer",
-    desc: "Built using Python + NLP to analyze resumes and give smart feedback.",
+    desc: "Built using Python, NLP, and Machine Learning to analyze resumes and provide intelligent career recommendations.",
+    icon: Brain,
+    live: "/projects/resume-analyzer",
+    code: "/contact",
+    gradient: "from-cyan-500 to-blue-500",
   },
   {
-    title: "E-commerce Backend",
-    desc: "Node.js + MongoDB scalable backend with payments integration.",
+    title: "E-Commerce Backend",
+    desc: "Scalable backend architecture with Node.js, Express, MongoDB, JWT authentication, and payment gateway integration.",
+    icon: ShoppingCart,
+    live: "/projects/ecommerce-backend",
+    code: "/contact",
+    gradient: "from-purple-500 to-pink-500",
   },
   {
     title: "ChatGPT Clone",
-    desc: "Full-stack AI chat app using OpenAI API and React.",
+    desc: "Full-stack AI chatbot built using React, OpenAI API, Node.js, and modern conversational UI patterns.",
+    icon: MessageSquare,
+    live: "/projects/chatgpt-clone",
+    code: "/contact",
+    gradient: "from-orange-500 to-red-500",
   },
 ];
 
-const ProjectsSection = () => {
+export default function ProjectsSection() {
+  const navigate = useNavigate();
+
   return (
-    <section className="py-28 bg-gradient-to-b from-slate-950 via-slate-900 to-black overflow-hidden relative">
-      <div className="max-w-6xl mx-auto px-6">
-         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/20 blur-[120px] rounded-full opacity-30" />
+    <section className="relative py-28 overflow-hidden bg-[#030712]">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-0 w-[450px] h-[450px] bg-cyan-500/10 blur-[180px]" />
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-purple-500/10 blur-[180px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-500/5 blur-[220px]" />
 
-         <div className="text-center mb-16">
-
-          {/* Badge */}
-          <div className="inline-block px-4 py-1 mb-4 text-sm text-blue-400 border border-blue-500/30 rounded-full bg-blue-500/10 backdrop-blur">
-            🚀 Learn from Industry Experts
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-cyan-500/20 backdrop-blur-xl text-cyan-300 text-sm font-medium">
+            <Rocket size={16} />
+            Real World Projects
           </div>
 
-          {/* Main Heading */}
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-            Meet Your{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Python Mentors
+          <h2 className="mt-6 text-5xl md:text-6xl font-bold text-white">
+            Build Industry Level
+            <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+              Portfolio Projects
             </span>
           </h2>
 
-          {/* Subtext */}
-          <p className="mt-4 text-slate-400 max-w-2xl mx-auto text-lg">
-            Get guided by top engineers from leading tech companies. Learn real-world skills,
-            build production-ready projects, and accelerate your career.
+          <p className="mt-6 text-slate-400 max-w-3xl mx-auto text-lg">
+            Work on production-ready projects that recruiters love.
+            Gain practical experience while building an impressive
+            portfolio for top tech companies.
           </p>
 
-          {/* Divider Line */}
-          <div className="mt-6 flex justify-center">
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></div>
+          <div className="flex justify-center mt-8">
+            <div className="w-24 h-1 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500" />
           </div>
-
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {projects.map((p, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -10 }}
-              className="p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10"
-            >
-              <h3 className="text-xl font-semibold">{p.title}</h3>
-              <p className="text-slate-400 mt-3">{p.desc}</p>
-            </motion.div>
-          ))}
+        {/* Projects Grid */}
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+          {projects.map((project, index) => {
+            const Icon = project.icon;
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true }}
+                className="
+                  group
+                  relative
+                  overflow-hidden
+                  rounded-[32px]
+                  border border-white/10
+                  bg-white/[0.04]
+                  backdrop-blur-2xl
+                  p-8
+                  hover:border-cyan-400/30
+                  transition-all
+                  duration-500
+                "
+              >
+                {/* Hover Glow */}
+                <div
+                  className={`
+                    absolute inset-0 opacity-0
+                    group-hover:opacity-100
+                    transition duration-500
+                    bg-gradient-to-br ${project.gradient}
+                  `}
+                  style={{
+                    opacity: 0.05,
+                  }}
+                />
+
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div
+                    className={`
+                      w-16 h-16 rounded-2xl
+                      bg-gradient-to-r ${project.gradient}
+                      flex items-center justify-center
+                      shadow-xl
+                    `}
+                  >
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="mt-6 text-2xl font-bold text-white">
+                    {project.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="mt-4 text-slate-400 leading-relaxed">
+                    {project.desc}
+                  </p>
+
+                  {/* Skills */}
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
+                      React
+                    </span>
+
+                    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
+                      Node.js
+                    </span>
+
+                    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
+                      MongoDB
+                    </span>
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex gap-3 mt-8">
+                    <button
+                      onClick={() => navigate(project.live)}
+                      className="
+                        flex-1
+                        flex
+                        items-center
+                        justify-center
+                        gap-2
+                        py-3
+                        rounded-xl
+                        text-white
+                        font-medium
+                        bg-gradient-to-r
+                        from-cyan-500
+                        to-blue-500
+                        hover:scale-105
+                        transition
+                      "
+                    >
+                      Live Demo
+                      <ArrowRight size={10} />
+                    </button>
+
+                    <button
+                      onClick={() => navigate(project.code)}
+                      className="
+                        w-14
+                        rounded-xl
+                        border
+                        border-white/10
+                        bg-white/5
+                        flex
+                        items-center
+                        justify-center
+                        text-white
+                        hover:bg-white/10
+                        transition
+                      "
+                    >
+                      <FaGithub size={18} />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-20">
+          <button
+            onClick={() => navigate("/projects")}
+            className="
+              px-10
+              py-4
+              rounded-2xl
+              text-white
+              font-semibold
+              bg-gradient-to-r
+              from-cyan-500
+              via-blue-500
+              to-purple-600
+              shadow-[0_20px_60px_rgba(59,130,246,0.35)]
+              hover:scale-105
+              transition-all
+              duration-300
+            "
+          >
+            View All Projects →
+          </button>
         </div>
       </div>
     </section>
   );
-};
-
-export default ProjectsSection;
+}

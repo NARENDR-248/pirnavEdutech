@@ -10,6 +10,7 @@ import {
 import Navbar from "../../common/Navbar";
 import Footer from "../../common/Footer";
 
+
 const ReactMain = () => {
   const [open, setOpen] = useState(null);
 

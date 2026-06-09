@@ -74,10 +74,10 @@ function TechnologiesSection() {
 
               Master
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">
-                {" "}In-Demand Tools
+                {" "}The Modern
               </span>
               <br />
-              & Technologies
+              Tech Stack
 
             </h2>
 

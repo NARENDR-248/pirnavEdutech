@@ -41,85 +41,155 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-24 bg-slate-950 text-white relative overflow-hidden">
+  <section className="relative overflow-hidden bg-[#020617] py-20">
 
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-cyan-900/20" />
+  {/* Premium Background */}
+  <div className="absolute inset-0">
+    <div className="absolute top-0 left-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-[100px]" />
+    <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[100px]" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:50px_50px]" />
+  </div>
 
-        <div className="text-center mb-16">
+  <div className="relative z-10 mx-auto max-w-6xl px-4">
 
-          <span className="text-blue-400 uppercase tracking-widest">
-            Why Choose Us
-          </span>
+    {/* Header */}
+    <div className="text-center mb-12">
 
-          <h2 className="text-5xl font-bold mt-4">
-            More Than A Course
-          </h2>
+      <span className="inline-flex items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-400">
+        Why Choose Pirnav EduTech
+      </span>
 
-          <p className="text-slate-400 mt-5 max-w-2xl mx-auto">
-            Learn from industry experts, build real projects,
-            receive mentorship and get complete placement support.
-          </p>
+      <h2 className="mt-5 text-3xl md:text-5xl font-extrabold text-white">
+        Compare Before
+        <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          You Invest Your Time
+        </span>
+      </h2>
 
+      <p className="mx-auto mt-4 max-w-2xl text-slate-400">
+        Structured learning, real-world projects, mentorship, and career support
+        designed for modern technology careers.
+      </p>
+
+    </div>
+
+    {/* Table Card */}
+    <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
+
+      {/* Header */}
+      <div className="grid grid-cols-3 bg-gradient-to-r from-cyan-600 to-blue-700 px-6 py-4">
+
+        <div className="text-sm md:text-base font-semibold text-white">
+          Features
         </div>
 
-        <div className="rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl">
+        <div className="text-center text-sm md:text-base font-semibold text-white">
+          Our Academy
+        </div>
 
-          <div className="grid grid-cols-3 bg-gradient-to-r from-blue-700 to-indigo-700 p-6 font-bold text-lg">
-
-            <div>Features</div>
-            <div className="text-center">
-              Our Academy
-            </div>
-            <div className="text-center">
-              Others
-            </div>
-
-          </div>
-
-          {features.map((item, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-3 p-6 border-b border-white/10 hover:bg-white/5 transition"
-            >
-
-              <div className="font-medium">
-                {item.title}
-              </div>
-
-              <div className="flex justify-center">
-
-                <CheckCircle
-                  className="text-green-400"
-                  size={24}
-                />
-
-              </div>
-
-              <div className="flex justify-center">
-
-                {item.others === false ? (
-                  <XCircle
-                    className="text-red-400"
-                    size={24}
-                  />
-                ) : (
-                  <AlertTriangle
-                    className="text-yellow-400"
-                    size={24}
-                  />
-                )}
-
-              </div>
-
-            </div>
-          ))}
-
+        <div className="text-center text-sm md:text-base font-semibold text-white">
+          Others
         </div>
 
       </div>
 
-    </section>
+      {/* Rows */}
+      {features.map((item, index) => (
+        <div
+          key={index}
+          className="
+            grid
+            grid-cols-3
+            items-center
+            px-6
+            py-4
+            border-b
+            border-white/5
+            hover:bg-white/[0.03]
+            transition-all
+            duration-300
+          "
+        >
+          {/* Feature */}
+          <div>
+            <h4 className="text-sm md:text-base font-medium text-white">
+              {item.title}
+            </h4>
+
+            {item.note && (
+              <p className="mt-1 text-xs text-slate-500">
+                {item.note}
+              </p>
+            )}
+          </div>
+
+          {/* Academy */}
+          <div className="flex justify-center">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              <CheckCircle
+                className="text-emerald-400"
+                size={18}
+              />
+            </div>
+          </div>
+
+          {/* Others */}
+          <div className="flex justify-center">
+            {item.others === false ? (
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500/10 border border-red-500/20">
+                <XCircle
+                  className="text-red-400"
+                  size={18}
+                />
+              </div>
+            ) : (
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-yellow-500/10 border border-yellow-500/20">
+                <AlertTriangle
+                  className="text-yellow-400"
+                  size={18}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+
+    </div>
+
+    {/* Stats */}
+    <div className="mt-10 grid gap-5 md:grid-cols-3">
+
+      <div className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl hover:border-cyan-500/30 transition">
+        <h3 className="text-3xl font-bold text-cyan-400">
+          500+
+        </h3>
+        <p className="mt-1 text-sm text-slate-400">
+          Students Trained
+        </p>
+      </div>
+
+      <div className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl hover:border-cyan-500/30 transition">
+        <h3 className="text-3xl font-bold text-cyan-400">
+          95%
+        </h3>
+        <p className="mt-1 text-sm text-slate-400">
+          Placement Success
+        </p>
+      </div>
+
+      <div className="group rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl hover:border-cyan-500/30 transition">
+        <h3 className="text-3xl font-bold text-cyan-400">
+          50+
+        </h3>
+        <p className="mt-1 text-sm text-slate-400">
+          Industry Mentors
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
   );
 }

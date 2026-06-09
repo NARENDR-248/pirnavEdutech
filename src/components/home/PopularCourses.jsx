@@ -36,6 +36,7 @@ const courses = [
     students: "2.5k+",
     duration: "4 Months",
     color: "from-cyan-400 to-blue-600",
+    description: "React • Hooks • Redux • Tailwind CSS",
   },
   {
     id: 2,
@@ -46,6 +47,7 @@ const courses = [
     students: "3.2k+",
     duration: "6 Months",
     color: "from-yellow-400 to-orange-500",
+    description: "Python • Django • REST API • MySQL",
   },
   {
     id: 3,
@@ -56,8 +58,8 @@ const courses = [
     students: "4k+",
     duration: "6 Months",
     color: "from-purple-500 to-pink-500",
+    description: "Java • Spring Boot • Hibernate • SQL",
   },
-
   {
     id: 4,
     title: "AWS DevOps",
@@ -67,8 +69,8 @@ const courses = [
     students: "1.8k+",
     duration: "5 Months",
     color: "from-blue-500 to-indigo-700",
+    description: "AWS • Docker • Jenkins • Kubernetes",
   },
-
   {
     id: 5,
     title: "Node JS Development",
@@ -78,8 +80,8 @@ const courses = [
     students: "2.2k+",
     duration: "4 Months",
     color: "from-green-400 to-emerald-600",
+    description: "Node.js • Express • MongoDB • JWT",
   },
-
   {
     id: 6,
     title: "MERN Stack",
@@ -89,8 +91,8 @@ const courses = [
     students: "3.8k+",
     duration: "6 Months",
     color: "from-teal-400 to-cyan-600",
+    description: "MongoDB • Express • React • Node",
   },
-
   {
     id: 7,
     title: "Data Science",
@@ -100,8 +102,8 @@ const courses = [
     students: "3.5k+",
     duration: "6 Months",
     color: "from-pink-400 to-rose-600",
+    description: "Pandas • NumPy • Power BI • Analytics",
   },
-
   {
     id: 8,
     title: "Machine Learning",
@@ -111,8 +113,8 @@ const courses = [
     students: "2.9k+",
     duration: "5 Months",
     color: "from-violet-500 to-purple-700",
+    description: "ML • Scikit-Learn • TensorFlow • AI",
   },
-
   {
     id: 9,
     title: "Software Testing",
@@ -122,8 +124,8 @@ const courses = [
     students: "1.9k+",
     duration: "3 Months",
     color: "from-red-400 to-orange-600",
+    description: "Manual • Selenium • API Testing • QA",
   },
-
   {
     id: 10,
     title: "Oracle Fusion HCM",
@@ -133,8 +135,8 @@ const courses = [
     students: "1.5k+",
     duration: "4 Months",
     color: "from-blue-400 to-sky-600",
+    description: "HCM • Payroll • Core HR • Oracle Cloud",
   },
-
   {
     id: 11,
     title: "Generative AI",
@@ -144,8 +146,8 @@ const courses = [
     students: "2.7k+",
     duration: "5 Months",
     color: "from-fuchsia-500 to-indigo-700",
+    description: "LLMs • LangChain • OpenAI • Prompting",
   },
-
   {
     id: 12,
     title: "Cyber Security",
@@ -155,6 +157,7 @@ const courses = [
     students: "2.1k+",
     duration: "5 Months",
     color: "from-gray-700 to-black",
+    description: "Ethical Hacking • Network Security • SOC",
   },
 ];
 
@@ -188,7 +191,7 @@ function PopularCourses() {
           className="text-center mb-20"
         >
           <h2 className="text-6xl font-extrabold text-white">
-            Future-Ready{" "}
+            Professional Development{" "}
             <span className="text-cyan-400">Programs</span>
           </h2>
           <p className="text-gray-400 mt-4">
@@ -211,73 +214,141 @@ function PopularCourses() {
         >
           {courses.map((course) => (
             <SwiperSlide key={course.id}>
-              
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="relative group"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.3 }}
+                className="relative group h-full"
               >
-                {/* Glow Border */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} blur-xl opacity-30 group-hover:opacity-80 transition`} />
+                {/* Animated Glow */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${course.color}
+      blur-2xl opacity-20 group-hover:opacity-60 transition duration-500`}
+                />
 
-                <Tilt tiltMaxAngleX={15} tiltMaxAngleY={15} scale={1.05}>
-                  <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 h-[420px] flex flex-col justify-between">
-
-                    {/* Top */}
+                <Tilt
+                  tiltMaxAngleX={12}
+                  tiltMaxAngleY={12}
+                  scale={1.02}
+                  transitionSpeed={1200}
+                >
+                  <div
+                    className="
+        relative
+        bg-white/5
+        backdrop-blur-xl
+        border border-white/10
+        rounded-3xl
+        p-7
+        h-[520px]
+        flex
+        flex-col
+        justify-between
+        overflow-hidden
+        hover:border-cyan-400/40
+        transition-all duration-500
+      "
+                  >
+                    {/* Top Content */}
                     <div>
-                      <div className={`w-16 h-16 flex items-center justify-center text-3xl text-white rounded-xl bg-gradient-to-br ${course.color}`}>
+                      {/* Icon */}
+                      <div
+                        className={`
+            w-20 h-20
+            rounded-2xl
+            bg-gradient-to-br
+            ${course.color}
+            flex items-center justify-center
+            text-4xl text-white
+            shadow-lg
+          `}
+                      >
                         {course.icon}
                       </div>
 
-                      <h3 className="text-white text-2xl font-bold mt-4">
+                      {/* Course Title */}
+                      <h3 className="text-white text-2xl font-bold mt-6">
                         {course.title}
                       </h3>
 
-                      <div className="flex gap-4 mt-3 text-sm text-gray-300">
-                        <span className="flex items-center gap-1 text-yellow-400">
-                          <FaStar /> {course.rating}
+                      {/* Description */}
+                      <div className="mt-4 min-h-[90px]">
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          {course.description}
+                        </p>
+
+                        <div
+                          className={`mt-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${course.color}`}
+                        >
+                          Tech Skills
+                        </div>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="flex items-center gap-5 mt-5">
+                        <span className="flex items-center gap-2 text-yellow-400 text-sm font-medium">
+                          <FaStar />
+                          {course.rating}
                         </span>
-                        <span className="flex items-center gap-1">
-                          <FaUsers /> {course.students}
+
+                        <span className="flex items-center gap-2 text-gray-300 text-sm">
+                          <FaUsers />
+                          {course.students}
                         </span>
                       </div>
                     </div>
 
-                    {/* Bottom */}
+                    {/* Bottom Content */}
                     <div>
-                      <div className="text-gray-400 text-sm flex items-center gap-2 mb-4">
-                        <FaClock /> {course.duration}
+                      <div className="flex items-center gap-2 text-gray-400 text-sm mb-5">
+                        <FaClock />
+                        <span>{course.duration}</span>
                       </div>
 
-                      {/* 🔥 Magnetic Button */}
-                     <motion.button
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  onClick={() => navigate(course.path)}
-  className="
-  w-full
-  bg-gradient-to-r
-  from-cyan-500
-  to-blue-600
-  text-white
-  py-3
-  rounded-xl
-  flex
-  items-center
-  justify-center
-  gap-2
-  font-semibold
-  cursor-pointer
-  "
->
-  Explore Course
-  <FaArrowRight />
-</motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate(course.path)}
+                        className="
+              w-full
+              py-3.5
+              rounded-xl
+              bg-gradient-to-r
+              from-cyan-500
+              to-blue-600
+              text-white
+              font-semibold
+              flex
+              items-center
+              justify-center
+              gap-2
+              shadow-lg
+              hover:shadow-cyan-500/30
+              transition-all
+              cursor-pointer
+            "
+                      >
+                        Explore Course
+                        <FaArrowRight />
+                      </motion.button>
                     </div>
 
+                    {/* Decorative Corner */}
+                    <div
+                      className={`
+          absolute
+          -top-12
+          -right-12
+          w-32
+          h-32
+          rounded-full
+          bg-gradient-to-r
+          ${course.color}
+          opacity-10
+        `}
+                    />
                   </div>
                 </Tilt>
               </motion.div>
-
             </SwiperSlide>
           ))}
         </Swiper>

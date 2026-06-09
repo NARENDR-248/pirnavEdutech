@@ -103,9 +103,9 @@ function OracleCourses() {
           </span>
 
           <h2 className="mt-5 text-4xl md:text-6xl font-extrabold text-white">
-            Enroll Here For
+            Secure
             <span className="text-cyan-400">
-              {" "}Live Training
+              {" "}Your Admission
             </span>
           </h2>
 

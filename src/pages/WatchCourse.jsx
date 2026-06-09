@@ -30,7 +30,7 @@ function WatchCourse() {
 
   return (
     <>
-      
+
 
       {/* ================= HERO SECTION ================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white">
@@ -40,9 +40,9 @@ function WatchCourse() {
 
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-500/20 blur-3xl rounded-full"></div>
 
-        <div className="relative max-w-7xl mx-auto px-5 py-20 lg:py-28">
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[70vh]">
 
             {/* ================= LEFT CONTENT ================= */}
             <div
@@ -63,19 +63,15 @@ function WatchCourse() {
               </div>
 
               {/* Heading */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-
-                Watch &
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500">
-
-                  Learn React JS
-
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+                Become a
+                <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  React Developer
                 </span>
-
               </h1>
 
               {/* Description */}
-              <p className="text-lg text-gray-300 leading-relaxed mb-8">
+              <p className="max-w-lg text-base md:text-lg text-slate-100 leading-relaxed mb-4">
 
                 Master React JS with real-world projects,
                 modern frontend architecture, Tailwind CSS,
@@ -84,41 +80,40 @@ function WatchCourse() {
               </p>
 
               {/* Stats */}
-              <div className="flex flex-wrap gap-4 mb-10">
-
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-5 py-3 rounded-2xl">
-
-                  <FaStar className="text-yellow-400" />
-
-                  <span>4.9 Rating</span>
-
-                </div>
-
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-5 py-3 rounded-2xl">
-
-                  <FaUsers />
-
-                  <span>12K+ Students</span>
-
-                </div>
-
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-5 py-3 rounded-2xl">
-
-                  <FaClock />
-
-                  <span>40 Hours</span>
-
-                </div>
-
+              <div className="grid grid-cols-3 gap-4 mb-10">
+                {[
+                  { icon: <FaStar />, value: "4.9", label: "Rating" },
+                  { icon: <FaUsers />, value: "12K+", label: "Students" },
+                  { icon: <FaClock />, value: "40H", label: "Content" },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="
+bg-white/5
+backdrop-blur-xl
+border border-white/10
+rounded-2xl
+p-4
+text-center
+hover:bg-white/10
+hover:-translate-y-1
+transition-all
+duration-300
+"
+                  >
+                    <div className="text-yellow-400 text-2xl flex justify-center mb-2">
+                      {item.icon}
+                    </div>
+                  <h3 className="text-lg font-bold">{item.value}</h3>
+                    <p className="text-sm text-gray-300">{item.label}</p>
+                  </div>
+                ))}
               </div>
 
               {/* Button */}
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-blue-600 hover:to-indigo-700 px-8 py-4 rounded-2xl font-bold shadow-[0_20px_60px_rgba(59,130,246,0.25)] hover:scale-105 transition-all duration-300">
-
+              <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-blue-600 hover:to-indigo-700 px-6 py-3 rounded-xl font-semibold text-base shadow-[0_10px_30px_rgba(59,130,246,0.25)] hover:scale-105 transition-all duration-300">
                 Start Learning
-
               </button>
-
             </div>
 
             {/* ================= VIDEO CARD ================= */}
@@ -150,8 +145,18 @@ function WatchCourse() {
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 z-20"></div>
 
                 {/* Video */}
-               
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/pN6jk0uUrD8?si=1EcYT0oLBaGRf9HQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div className="relative rounded-[32px] overflow-hidden border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.5)]">
+
+                  <div className="aspect-video">
+                    <iframe
+                      className="w-full h-full"
+                      src="https://www.youtube.com/embed/pN6jk0uUrD8"
+                      title="React Course"
+                      allowFullScreen
+                    />
+                  </div>
+
+                </div>
 
               </div>
 
@@ -332,7 +337,7 @@ function WatchCourse() {
 
       </section>
 
-   
+
     </>
   );
 }

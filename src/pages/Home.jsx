@@ -27,6 +27,7 @@ function Home() {
       <EnrollmentForm />
 
       <Partners />
+
       <SuccessStats />
 
       <PopularCourses />
@@ -38,12 +39,15 @@ function Home() {
       <WhyChooseUs />
 
       <TechnologiesSection />
+      
       <OracleCourses />
 
       <FAQ />
 
       <Footer />
+
       <WhatsAppButton />
+      
       <EnquiryWidget />
     </>
   );
