@@ -52,6 +52,7 @@ const MEGA_DATA = {
           title: "React Mastery Track",
           desc: "From hooks to architecture patterns — build scalable SPAs",
           badge: "Hot",
+          Path: "/react-course",
         },
         {
           icon: FiLayers,
