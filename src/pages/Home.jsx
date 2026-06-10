@@ -16,6 +16,10 @@ import PlacementPartners from "../components/home/PlacementPartners";
 import WhatsAppButton from "../components/common/WhatsAppButton";
 import PopupEnroll from "./PopupEnroll";
 import EnquiryWidget from "./EnquiryWidget";
+import SkillTracksSection from "./SkillTracksSection";
+import PremiumDashboard from "./PremiumDashboard";
+import StudentReviews from "./StudentReviews";
+import CertificationCourses from "../components/home/CertificationCourses";
 
 function Home() {
   return (
@@ -26,27 +30,29 @@ function Home() {
 
       <EnrollmentForm />
 
-      <Partners />
+      {/* <Partners /> */}
+      {/* <PlacementPartners /> */}
 
-      <SuccessStats />
+       <SkillTracksSection /> 
+       {/* <PremiumDashboard/> */}
+       <StudentReviews />
+      
+      {/* <SuccessStats /> */}
 
       <PopularCourses />
 
-      <WatchCourse />
+      {/* <WatchCourse /> */}
 
-      <SuccessStories />
+      {/* <SuccessStories /> */}
 
       <WhyChooseUs />
 
-      <TechnologiesSection />
-      
-      <OracleCourses />
+      {/* <TechnologiesSection /> */}
+     <CertificationCourses/>
 
       <FAQ />
 
       <Footer />
-
-      <WhatsAppButton />
       
       <EnquiryWidget />
     </>

@@ -72,41 +72,37 @@ function EnrollmentForm() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-24 bg-gradient-to-br from-slate-50 via-white to-cyan-50">
+    <section className="relative overflow-hidden py-24 bg-[#020b14] text-white">
       
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden">
-
-  <div className="absolute top-[-10%] left-[-5%] h-[500px] w-[500px] rounded-full bg-cyan-400/20 blur-[180px]" />
-
-  <div className="absolute bottom-[-10%] right-[-5%] h-[500px] w-[500px] rounded-full bg-blue-500/20 blur-[180px]" />
-
-  <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40" />
-
-</div>
+        <div className="absolute top-[-10%] left-[-5%] h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[180px]" />
+        <div className="absolute bottom-[-10%] right-[-5%] h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[180px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40" />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* LEFT SIDE */}
+          {/* LEFT */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cyan-200 bg-cyan-100 text-cyan-700 font-semibold text-sm">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 text-cyan-400 font-semibold text-sm">
               🚀 Start Your Learning Journey
             </span>
 
-            <h2 className="mt-8 text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-slate-900">
-              Secure Your Role In 
-              <span className="block bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
+            <h2 className="mt-8 text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+              Secure Your Role In
+              <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 The Technology Sector
               </span>
             </h2>
 
-            <p className="mt-6 text-lg text-slate-600 leading-8">
+            <p className="mt-6 text-lg text-gray-400 leading-8">
               Learn from industry experts, build real-world projects, prepare
               for interviews, and get placement assistance. Join thousands of
               students building successful careers in technology.
@@ -118,42 +114,42 @@ function EnrollmentForm() {
                 <motion.div
                   key={index}
                   whileHover={{ y: -6, scale: 1.02 }}
-                  className="bg-white border border-slate-200 rounded-3xl p-5 shadow-md"
+                  className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-5 shadow-lg"
                 >
-                  <div className="text-cyan-600 text-2xl mb-3">
+                  <div className="text-cyan-400 text-2xl mb-3">
                     {item.icon}
                   </div>
 
-                  <h3 className="text-slate-900 text-3xl font-bold">
+                  <h3 className="text-white text-3xl font-bold">
                     {item.value}
                   </h3>
 
-                  <p className="text-slate-500 mt-2">{item.label}</p>
+                  <p className="text-gray-400 mt-2">{item.label}</p>
                 </motion.div>
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-4 mt-10 text-sm text-slate-600">
+            <div className="flex flex-wrap gap-4 mt-10 text-sm text-gray-400">
               <span>✓ Live Classes</span>
               <span>✓ Placement Support</span>
               <span>✓ Real Projects</span>
             </div>
           </motion.div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT FORM */}
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="bg-white border border-slate-200 rounded-[32px] p-8 lg:p-10 shadow-xl">
+            <div className="bg-white/5 border border-white/10 backdrop-blur-2xl rounded-[32px] p-8 lg:p-10 shadow-xl">
               
-              <h3 className="text-3xl font-bold text-slate-900">
+              <h3 className="text-3xl font-bold text-white">
                 Free Career Consultation
               </h3>
 
-              <p className="text-slate-500 mt-2 mb-8">
+              <p className="text-gray-400 mt-2 mb-8">
                 Fill out the form and our experts will contact you.
               </p>
 
@@ -211,11 +207,11 @@ function EnrollmentForm() {
                 />
 
                 <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.96 }}
                   disabled={loading}
                   type="submit"
-                  className="w-full py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg"
+                  className="w-full py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/30 transition-all"
                 >
                   {loading ? "Submitting..." : "Book Free Consultation"}
                 </motion.button>
@@ -225,21 +221,26 @@ function EnrollmentForm() {
         </div>
       </div>
 
-      {/* Tailwind Input Utility */}
+      {/* Input Styles */}
       <style jsx>{`
         .input {
           width: 100%;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 16px;
           padding: 16px 20px;
-          color: #0f172a;
+          color: white;
           outline: none;
           transition: all 0.3s;
         }
+
+        .input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+
         .input:focus {
           border-color: #06b6d4;
-          box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+          box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
         }
       `}</style>
     </section>
