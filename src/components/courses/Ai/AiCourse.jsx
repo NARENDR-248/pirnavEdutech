@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Brain,
   Bot,
@@ -8,34 +9,34 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 
 const courses = [
   {
     title: "Artificial Intelligence",
-    description:
-      "Master AI concepts, intelligent systems, and real-world AI applications.",
+    description: "AI concepts & intelligent systems.",
     icon: Brain,
     color: "from-cyan-500 to-blue-600",
   },
   {
     title: "Machine Learning",
-    description:
-      "Learn supervised, unsupervised learning, regression, classification and deployment.",
+    description: "Regression, Classification & Deployment.",
     icon: Cpu,
     color: "from-purple-500 to-pink-600",
   },
   {
     title: "Deep Learning",
-    description:
-      "Build Neural Networks, CNNs, RNNs, and advanced AI models.",
+    description: "CNNs, RNNs & Neural Networks.",
     icon: Bot,
     color: "from-orange-500 to-red-600",
   },
   {
     title: "Data Science",
-    description:
-      "Work with Python, Pandas, NumPy, visualization and analytics.",
+    description: "Python, Pandas & Analytics.",
     icon: Database,
     color: "from-emerald-500 to-green-600",
   },
@@ -45,172 +46,148 @@ const AiCourse = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen py-28 bg-[#020617] overflow-hidden">
+    <section className="relative py-16 bg-[#020617] overflow-hidden">
 
-      {/* Background Effects */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-500/10 blur-[180px]" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/10 blur-[180px]" />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-500/5 blur-[220px]" />
+      {/* Background Glow */}
+      <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500/10 blur-[120px]" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-500/10 blur-[120px]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
 
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-10">
 
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cyan-500/20 bg-white/5 backdrop-blur-xl text-cyan-300 text-sm">
-            <Sparkles size={16} />
-            AI Learning Ecosystem
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-white/5 backdrop-blur-xl text-cyan-300 text-xs">
+            <Sparkles size={14} />
+            AI Learning Path
           </div>
 
-          <h1 className="mt-6 text-5xl md:text-7xl font-bold text-white">
-            Become an
-            <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-              AI Engineer
-            </span>
-          </h1>
+          <h2 className="mt-4 text-4xl md:text-5xl font-bold text-white">
+            Become an  AI Engineer
+            </h2>
 
-          <p className="max-w-3xl mx-auto mt-6 text-slate-400 text-lg">
-            Learn Artificial Intelligence, Machine Learning, Deep Learning,
-            Data Science and Generative AI through industry-driven programs.
+          <p className="max-w-xl mx-auto mt-3 text-slate-400 text-sm">
+            Learn AI, ML, Deep Learning & Data Science with industry projects.
           </p>
         </div>
 
-        {/* Courses Grid */}
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
-
+        {/* Slider */}
+        <Swiper
+          modules={[Autoplay]}
+          loop
+          speed={5000}
+          autoplay={{
+            delay: 1,
+            disableOnInteraction: false,
+          }}
+          spaceBetween={20}
+          slidesPerView={1.2}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+            1280: {
+              slidesPerView: 4,
+            },
+          }}
+        >
           {courses.map((course, index) => {
             const Icon = course.icon;
 
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{
-                  y: -10,
-                  scale: 1.02,
-                }}
-                viewport={{ once: true }}
-                className="
-                  group
-                  relative
-                  overflow-hidden
-                  rounded-[30px]
-                  border border-white/10
-                  bg-white/[0.04]
-                  backdrop-blur-2xl
-                  p-8
-                "
-              >
-                <div
-                  className={`
-                    absolute inset-0 opacity-0
-                    group-hover:opacity-100
-                    transition duration-500
-                    bg-gradient-to-br ${course.color}/10
-                  `}
-                />
-
-                <div className="relative z-10">
-
+              <SwiperSlide key={index}>
+                <motion.div
+                  whileHover={{
+                    y: -6,
+                    scale: 1.02,
+                  }}
+                  className="
+                    group
+                    relative
+                    h-[260px]
+                    rounded-2xl
+                    border border-white/10
+                    bg-white/[0.04]
+                    backdrop-blur-2xl
+                    p-5
+                    overflow-hidden
+                  "
+                >
+                  {/* Hover Glow */}
                   <div
                     className={`
-                      w-16 h-16 rounded-2xl
-                      bg-gradient-to-r ${course.color}
-                      flex items-center justify-center
-                      shadow-xl
+                      absolute inset-0 opacity-0
+                      group-hover:opacity-100
+                      transition duration-500
+                      bg-gradient-to-br ${course.color}/10
                     `}
-                  >
-                    <Icon className="w-8 h-8 text-white" />
+                  />
+
+                  <div className="relative z-10">
+
+                    <div
+                      className={`
+                        w-12 h-12 rounded-xl
+                        bg-gradient-to-r ${course.color}
+                        flex items-center justify-center
+                      `}
+                    >
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+
+                    <h3 className="mt-4 text-lg font-semibold text-white">
+                      {course.title}
+                    </h3>
+
+                    <p className="mt-2 text-sm text-slate-400">
+                      {course.description}
+                    </p>
+
+                    <button
+                      onClick={() => navigate("/ai-curriculum")}
+                      className="
+                        mt-5
+                        flex items-center gap-2
+                        text-cyan-400
+                        text-sm
+                        font-medium
+                        hover:text-cyan-300
+                      "
+                    >
+                      View
+                      <ArrowRight size={15} />
+                    </button>
                   </div>
-
-                  <h3 className="mt-6 text-2xl font-bold text-white">
-                    {course.title}
-                  </h3>
-
-                  <p className="mt-4 text-slate-400 leading-relaxed">
-                    {course.description}
-                  </p>
-
-                  <button
-                    onClick={() => navigate("/ai-curriculum")}
-                    className="
-                      mt-6
-                      flex items-center gap-2
-                      text-cyan-400
-                      font-medium
-                      hover:text-cyan-300
-                    "
-                  >
-                    View Curriculum
-                    <ArrowRight size={18} />
-                  </button>
-                </div>
-              </motion.div>
+                </motion.div>
+              </SwiperSlide>
             );
           })}
-        </div>
+        </Swiper>
 
-        {/* CTA Section */}
-        <div className="mt-24">
+        {/* CTA */}
+        <div className="text-center mt-10">
 
-          <div
+          <button
+            onClick={() => navigate("/contact")}
             className="
-              rounded-[36px]
-              border border-white/10
-              bg-white/[0.04]
-              backdrop-blur-2xl
-              p-12
-              text-center
+              px-6 py-3
+              rounded-xl
+              text-sm
+              font-semibold
+              text-white
+              bg-gradient-to-r
+              from-cyan-500
+              via-blue-500
+              to-purple-600
+              hover:scale-105
+              transition-all
             "
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
-              Ready To Launch Your AI Career?
-            </h2>
-
-            <p className="mt-5 text-slate-400 max-w-2xl mx-auto">
-              Join thousands of learners building careers in AI,
-              Machine Learning, Data Science and Generative AI.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-5 mt-8">
-
-              <button
-                onClick={() => navigate("/ai-curriculum")}
-                className="
-                  px-8 py-4
-                  rounded-2xl
-                  font-semibold
-                  text-white
-                  bg-gradient-to-r
-                  from-cyan-500
-                  via-blue-500
-                  to-purple-600
-                  hover:scale-105
-                  transition-all
-                  shadow-[0_20px_60px_rgba(59,130,246,0.35)]
-                "
-              >
-                Explore Curriculum
-              </button>
-
-              <button
-                onClick={() => navigate("/contact")}
-                className="
-                  px-8 py-4
-                  rounded-2xl
-                  border border-white/10
-                  bg-white/5
-                  text-white
-                  hover:bg-white/10
-                  transition-all
-                "
-              >
-                Talk To Counselor
-              </button>
-
-            </div>
-          </div>
+            Enroll Now →
+          </button>
 
         </div>
 

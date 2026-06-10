@@ -18,18 +18,10 @@ const mentors = [
     company: "OpenAI",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800",
-    expertise: "LLMs & Generative AI",
+    expertise: "LLMs & GenAI",
     linkedin: "https://linkedin.com",
   },
-  {
-    name: "Michael Chen",
-    role: "Machine Learning Lead",
-    company: "Google",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43d?w=800",
-    expertise: "Deep Learning",
-    linkedin: "https://linkedin.com",
-  },
+ 
   {
     name: "Priya Sharma",
     role: "Data Science Manager",
@@ -41,7 +33,7 @@ const mentors = [
   },
   {
     name: "David Wilson",
-    role: "AI Solutions Architect",
+    role: "AI Architect",
     company: "Amazon",
     image:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800",
@@ -50,7 +42,7 @@ const mentors = [
   },
   {
     name: "Ananya Reddy",
-    role: "Computer Vision Engineer",
+    role: "CV Engineer",
     company: "Meta",
     image:
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800",
@@ -63,7 +55,7 @@ const mentors = [
     company: "NVIDIA",
     image:
       "https://images.unsplash.com/photo-1504593811423-6dd665756598?w=800",
-    expertise: "Natural Language Processing",
+    expertise: "Natural Language",
     linkedin: "https://linkedin.com",
   },
 ];
@@ -72,182 +64,243 @@ const AiMentores = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative py-28 overflow-hidden bg-[#030712]">
+    <section className="relative py-16 bg-[#030712] overflow-hidden">
 
       {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 blur-[160px]" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 blur-[160px]" />
-      <div className="absolute top-1/2 left-1/2 w-[700px] h-[700px] bg-blue-500/5 blur-[200px] -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[140px]" />
+      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-purple-500/10 blur-[140px]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/10 backdrop-blur-xl text-cyan-300 text-sm font-medium">
-            <Sparkles size={16} />
+          <div
+            className="
+              inline-flex
+              items-center
+              gap-2
+              px-4
+              py-2
+              rounded-full
+              border
+              border-cyan-500/20
+              bg-cyan-500/10
+              text-cyan-300
+              text-xs
+              backdrop-blur-xl
+            "
+          >
+            <Sparkles size={14} />
             Learn From Industry Experts
           </div>
 
-          <h2 className="mt-6 text-5xl md:text-6xl font-bold text-white">
-            Meet Your
-            <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-              AI Mentors
-            </span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-bold text-white">
+            Guided by AI Experts from Top Tech Companies
+            
           </h2>
 
-          <p className="max-w-3xl mx-auto mt-6 text-slate-400 text-lg">
-            Learn directly from AI researchers, ML engineers, and industry
-            leaders working at top global technology companies.
+          <p className="max-w-2xl mx-auto mt-3 text-slate-400 text-sm md:text-base">
+           Meta,Google,Microsoft
           </p>
         </motion.div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 text-center">
-            <h3 className="text-4xl font-bold text-cyan-400">50+</h3>
-            <p className="text-slate-400 mt-2">Mentors</p>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 text-center">
-            <h3 className="text-4xl font-bold text-blue-400">15+</h3>
-            <p className="text-slate-400 mt-2">Companies</p>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 text-center">
-            <h3 className="text-4xl font-bold text-purple-400">12+</h3>
-            <p className="text-slate-400 mt-2">Years Exp</p>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 text-center">
-            <h3 className="text-4xl font-bold text-emerald-400">100%</h3>
-            <p className="text-slate-400 mt-2">Industry Ready</p>
-          </div>
-
-        </div>
-
-        {/* Mentor Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-          {mentors.map((mentor, index) => (
-            <motion.div
+        {/* Small Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+          {[
+            ["50+", "Mentors"],
+            ["15+", "Companies"],
+            ["12+", "Years Exp"],
+            ["100%", "Industry Ready"],
+          ].map((item, index) => (
+            <div
               key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -8 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
               className="
-                group
-                overflow-hidden
-                rounded-[32px]
-                border border-white/10
+                p-4
+                rounded-2xl
+                border
+                border-white/10
                 bg-white/[0.04]
-                backdrop-blur-2xl
-                hover:border-cyan-400/30
-                transition-all duration-500
+                backdrop-blur-xl
+                text-center
               "
             >
-              <div className="relative h-72 overflow-hidden">
-                <img
-                  src={mentor.image}
-                  alt={mentor.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/40 to-transparent" />
-
-                <div className="absolute top-4 right-4 w-12 h-12 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center">
-                  <Brain className="text-cyan-400" size={22} />
-                </div>
-              </div>
-
-              <div className="p-6">
-
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs">
-                  <Building size={14} />
-                  {mentor.company}
-                </div>
-
-                <h3 className="mt-4 text-2xl font-bold text-white">
-                  {mentor.name}
-                </h3>
-
-                <p className="text-slate-300 mt-1">
-                  {mentor.role}
-                </p>
-
-                <p className="text-cyan-400 text-sm mt-3">
-                  {mentor.expertise}
-                </p>
-
-                <div className="flex gap-3 mt-6">
-
-                  <button
-                    onClick={() =>
-                      window.open(mentor.linkedin, "_blank")
-                    }
-                    className="
-                      flex-1
-                      py-3
-                      rounded-xl
-                      border border-white/10
-                      bg-white/5
-                      text-white
-                      flex items-center
-                      justify-center
-                      gap-2
-                      hover:bg-white/10
-                      transition
-                    "
-                  >
-                    <FaLinkedin />
-                    LinkedIn
-                  </button>
-
-                  <button
-                    onClick={() => navigate("/contact")}
-                    className="
-                      flex-1
-                      py-3
-                      rounded-xl
-                      bg-gradient-to-r
-                      from-cyan-500
-                      to-blue-600
-                      text-white
-                      font-semibold
-                      flex items-center
-                      justify-center
-                      gap-2
-                      hover:scale-105
-                      transition
-                    "
-                  >
-                    Connect
-                    <ArrowRight size={16} />
-                  </button>
-
-                </div>
-
-              </div>
-            </motion.div>
+              <h3 className="text-xl font-bold text-cyan-400">
+                {item[0]}
+              </h3>
+              <p className="text-xs text-slate-400 mt-1">
+                {item[1]}
+              </p>
+            </div>
           ))}
+        </div>
 
+        {/* Scrollable Cards */}
+        <div className="overflow-x-auto scrollbar-hide pb-4">
+          <div className="flex gap-4 w-max">
+
+            {mentors.map((mentor, index) => (
+              <motion.div
+                key={index}
+                whileHover={{
+                  y: -6,
+                  scale: 1.02,
+                }}
+                className="
+                  group
+                  w-[260px]
+                  flex-shrink-0
+                  rounded-3xl
+                  border
+                  border-white/10
+                  bg-white/[0.04]
+                  backdrop-blur-2xl
+                  overflow-hidden
+                  hover:border-cyan-400/30
+                  transition-all
+                "
+              >
+                {/* Image */}
+                <div className="relative h-40 overflow-hidden">
+                  <img
+                    src={mentor.image}
+                    alt={mentor.name}
+                    className="
+                      w-full
+                      h-full
+                      object-cover
+                      group-hover:scale-110
+                      transition
+                      duration-700
+                    "
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#030712] to-transparent" />
+
+                  <div
+                    className="
+                      absolute
+                      top-3
+                      right-3
+                      w-10
+                      h-10
+                      rounded-xl
+                      bg-cyan-500/20
+                      backdrop-blur-xl
+                      flex
+                      items-center
+                      justify-center
+                    "
+                  >
+                    <Brain size={18} className="text-cyan-400" />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-4">
+
+                  <div
+                    className="
+                      inline-flex
+                      items-center
+                      gap-1
+                      px-2
+                      py-1
+                      rounded-full
+                      text-[10px]
+                      bg-cyan-500/10
+                      border
+                      border-cyan-500/20
+                      text-cyan-300
+                    "
+                  >
+                    <Building size={10} />
+                    {mentor.company}
+                  </div>
+
+                  <h3 className="mt-3 text-lg font-bold text-white">
+                    {mentor.name}
+                  </h3>
+
+                  <p className="text-sm text-slate-300">
+                    {mentor.role}
+                  </p>
+
+                  <p className="text-xs text-cyan-400 mt-2">
+                    {mentor.expertise}
+                  </p>
+
+                  {/* Buttons */}
+                  <div className="flex gap-2 mt-4">
+
+                    <button
+                      onClick={() =>
+                        window.open(
+                          mentor.linkedin,
+                          "_blank"
+                        )
+                      }
+                      className="
+                        flex-1
+                        py-2
+                        rounded-xl
+                        border
+                        border-white/10
+                        bg-white/5
+                        flex
+                        items-center
+                        justify-center
+                        hover:bg-white/10
+                        transition
+                      "
+                    >
+                      <FaLinkedin size={14} />
+                    </button>
+
+                    <button
+                      onClick={() => navigate("/contact")}
+                      className="
+                        flex-1
+                        py-2
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-cyan-500
+                        to-blue-600
+                        text-white
+                        text-sm
+                        font-medium
+                        flex
+                        items-center
+                        justify-center
+                        gap-1
+                        hover:scale-105
+                        transition
+                      "
+                    >
+                      Connect
+                      <ArrowRight size={14} />
+                    </button>
+
+                  </div>
+
+                </div>
+              </motion.div>
+            ))}
+
+          </div>
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-20">
-
+        <div className="text-center mt-10">
           <button
             onClick={() => navigate("/contact")}
             className="
-              px-10
-              py-5
+              px-6
+              py-3
               rounded-2xl
               bg-gradient-to-r
               from-cyan-500
@@ -255,14 +308,13 @@ const AiMentores = () => {
               to-purple-600
               text-white
               font-semibold
-              shadow-[0_20px_60px_rgba(59,130,246,0.35)]
+              shadow-[0_10px_40px_rgba(59,130,246,0.35)]
               hover:scale-105
               transition-all
             "
           >
-            Book a Mentor Session →
+            Book Mentor Session →
           </button>
-
         </div>
 
       </div>
