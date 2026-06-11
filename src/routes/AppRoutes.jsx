@@ -19,7 +19,9 @@ import AiMain from "../components/courses/Ai/AiMain";
 import ScrollToTop from "../components/common/ScrollToTop";
 import NotFound from "../pages/NotFound";
 import Enroll from "../pages/Enroll";
+
 import EnquiryWidget from "../pages/EnquiryWidget";
+import Admissions from "../pages/Admissions";
 
 const AppRoutes = () => {
   return (
@@ -50,6 +52,7 @@ const AppRoutes = () => {
         <Route path="/mern-course" element={<MernMain />} />
         <Route path="/AI-course" element={<AiMain />} />
         <Route path="/enroll" element={<Enroll />} />
+       <Route path="/admissions" element={<Admissions />} />
       </Routes>
       <EnquiryWidget />
     </BrowserRouter>

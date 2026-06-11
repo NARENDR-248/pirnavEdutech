@@ -95,7 +95,11 @@ export default function SkillTracksSection() {
   const activeCourses = COURSE_DATA[activeTab] || [];
 
   return (
+<<<<<<< HEAD
     <section className="relative w-full bg-[#020b14] text-white pt-10 pb-4 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans">
+=======
+    <section className="relative w-full min-h-screen bg-[#020b14] text-white flex flex-col items-center justify-center py-10 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans">
+>>>>>>> 2ebd100 (new features)
       
       {/* Aurora Ambient Glow Overlays */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none select-none" />
@@ -158,7 +162,7 @@ export default function SkillTracksSection() {
         </div>
 
         {/* Global Catalog Footer Action */}
-        <div className="mt-14">
+        <div className="mt-0">
           <button className="group relative flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-sm font-bold tracking-wide text-slate-950 shadow-[0_4px_20px_rgba(6,182,212,0.25)] transition-all duration-300 transform will-change-transform hover:-translate-y-0.5 hover:shadow-[0_6px_25px_rgba(6,182,212,0.4)] active:scale-[0.98]">
             <span className="text-white">Explore All Live Training</span>
             <div className="flex items-center text-white/80 group-hover:translate-x-0.5 transition-transform duration-200">

@@ -23,6 +23,7 @@ import {
   FiTerminal,
   FiBox,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -798,20 +799,20 @@ export default function Navbar() {
   return (
     <>
       {/* ── Desktop / Tablet Navbar ── */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "shadow-2xl shadow-black/50 border-b border-white/6"
-            : "border-b border-transparent"
-        }`}
-        style={{
-          background: scrolled
-            ? "rgba(2, 21, 41, 0.92)"
-            : "rgba(2, 21, 41, 0.98)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-        }}
-      >
+<header
+  className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    scrolled
+      ? "shadow-[0_12px_50px_rgba(0,0,0,0.35)]"
+      : ""
+  }`}
+  style={{
+  background: scrolled
+    ? "rgba(2, 21, 41, 0.95)"
+    : "rgba(2, 21, 41, 0.90)",
+  backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)",
+}}
+>
         {/* Top gradient line */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
 
@@ -822,7 +823,7 @@ export default function Navbar() {
             <img
               src="https://www.pirnav.com/images/pirnav_logo.png"
               alt="Pirnav Edutech"
-              className="h-9 w-9 object-contain"
+              className="h-9 w-9 object-contain text-slate-400"
             />
             <p className="hidden sm:block text-xs uppercase tracking-[0.3em] text-slate-400 font-medium leading-none">
               Learn · Build · Grow
@@ -855,6 +856,7 @@ export default function Navbar() {
                   )}
                 </button>
 
+
                 {item.hasMega && (
                   <div onMouseEnter={stayOpen} onMouseLeave={closeMega}>
                     <MegaMenu menuKey={item.key} isVisible={activeMega === item.key} />
@@ -862,6 +864,12 @@ export default function Navbar() {
                 )}
               </div>
             ))}
+            <Link
+  to="/admissions"
+  className="text-white hover:text-blue-400 transition"
+>
+  Admissions
+</Link>
           </div>
 
           {/* ── Right: theme toggle + hamburger ── */}

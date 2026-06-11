@@ -81,7 +81,11 @@ const Hero = () => {
   ];
 
   return (
+<<<<<<< HEAD
     <section className="relative overflow-hidden bg-slate-950">
+=======
+<section className="relative overflow-hidden bg-slate-950 min-h-[500px]">
+>>>>>>> 2ebd100 (new features)
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -121,8 +125,13 @@ const Hero = () => {
       </div>
 
       {/* Grid */}
+<<<<<<< HEAD
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20 pb-8">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 items-center">
+=======
+<div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-6 lg:pt-12 pb-16">
+<div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+>>>>>>> 2ebd100 (new features)
           {/* LEFT */}
           <motion.div
             variants={containerVariants}
@@ -257,6 +266,7 @@ const Hero = () => {
           </motion.div>
 
           {/* RIGHT */}
+<<<<<<< HEAD
           <motion.div
             animate={{
               y: [0, -20, 0],
@@ -269,6 +279,20 @@ const Hero = () => {
             className="relative w-full max-w-md"
           >
             <div className="relative w-full max-w-md lg:max-w-lg aspect-square transform -translate-y-10">
+=======
+     <motion.div
+  animate={{
+    y: [20, 0, 20],
+  }}
+  transition={{
+    duration: 6,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="relative w-full max-w-lg mt-5"
+>
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-square transform -translate-y-10 lg:-translate-y-24">
+>>>>>>> 2ebd100 (new features)
               <img
                 src={PrinavHero2}
                 alt="Student"
@@ -285,7 +309,11 @@ const Hero = () => {
         </div>
         {/* Companies */}
 
+<<<<<<< HEAD
         <div className="mt-12 overflow-hidden">
+=======
+        <div className="mt-0 overflow-hidden">
+>>>>>>> 2ebd100 (new features)
           <div className="text-center mb-14">
             <motion.p
               initial={{ opacity: 0, y: 20 }}

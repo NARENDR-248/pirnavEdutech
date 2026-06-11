@@ -14,7 +14,7 @@ function Enroll() {
     <>
       <Navbar />
 
-      <section className=" bg-gradient-to-br from-[#0F172A] via-[#12367D] to-[#0F766E] py-14 md:py-16 px-5 overflow-hidden relative">
+      <section className=" bg-gradient-to-br from-[#0F172A] via-[#12367D] to-[#0F766E] py-5 mt-0 md:py-16 px-5 overflow-hidden relative">
         
         {/* Background Blur */}
         <div className="absolute top-0 left-0 w-80 h-80 bg-cyan-500/20 blur-[120px] rounded-full"></div>

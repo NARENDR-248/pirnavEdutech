@@ -25,35 +25,39 @@ function Home() {
   return (
     <>
       <Navbar />
+      <div className="relative z-10 pb-24">
+        <Hero />
 
-      <Hero />
+        <EnrollmentForm />
 
-      <EnrollmentForm />
+        {/* <Partners /> */}
+        {/* <PlacementPartners /> */}
 
-      {/* <Partners /> */}
-      {/* <PlacementPartners /> */}
+        <SkillTracksSection />
+        {/* <PremiumDashboard/> */}
+        <StudentReviews />
 
-       <SkillTracksSection /> 
-       {/* <PremiumDashboard/> */}
-       <StudentReviews />
-      
-      {/* <SuccessStats /> */}
+        {/* <SuccessStats /> */}
 
+<<<<<<< HEAD
       {/* <PopularCourses /> */}
+=======
+        <PopularCourses />
+>>>>>>> 2ebd100 (new features)
 
-      {/* <WatchCourse /> */}
+        {/* <WatchCourse /> */}
 
-      {/* <SuccessStories /> */}
+        {/* <SuccessStories /> */}
 
-      <WhyChooseUs />
+        <WhyChooseUs />
 
-      {/* <TechnologiesSection /> */}
-     <CertificationCourses/>
+        {/* <TechnologiesSection /> */}
+        <CertificationCourses />
 
-      <FAQ />
+        <FAQ />
 
-      <Footer />
-      
+        <Footer />
+      </div>
       <EnquiryWidget />
     </>
   );
