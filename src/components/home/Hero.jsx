@@ -81,7 +81,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 min-h-screen">
+    <section className="relative overflow-hidden bg-slate-950">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -121,8 +121,8 @@ const Hero = () => {
       </div>
 
       {/* Grid */}
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-24 lg:pt-32 pb-16">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center min-h-[80vh]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20 pb-8">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 items-center">
           {/* LEFT */}
           <motion.div
             variants={containerVariants}
@@ -164,7 +164,7 @@ const Hero = () => {
             />
 
             {/* Heading */}
-            <motion.h1 className="text-white font-black leading-[1.05] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">
+            <motion.h1 className="text-white font-black leading-[1.05] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl">
               {title.map((word, index) => (
                 <motion.span
                   key={index}
@@ -188,14 +188,14 @@ const Hero = () => {
             </motion.h1>
 
             {/* Description */}
-            <p className="mt-6 text-slate-300 text-base md:text-lg leading-8 max-w-2xl">
+            <p className="mt-4 text-slate-300 text-sm md:text-base leading-6 max-w-xl">
               Master Full Stack Development, Artificial Intelligence, Data
               Science, Cloud Computing, and DevOps through expert-led programs,
               real-world projects, and placement-focused training.
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-wrap gap-4 mt-8">
+            <div className="flex flex-wrap gap-3 mt-5">
               <Link to="/courses">
                 <button className="group inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                   Explore Courses
@@ -212,15 +212,15 @@ const Hero = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-12">
+            <div className="grid grid-cols-3 gap-3 mt-6">
               {stats.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-5"
+                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3"
                 >
                   <div className="text-cyan-400 text-2xl mb-3">{item.icon}</div>
 
-                  <h3 className="text-white font-bold text-3xl">
+                  <h3 className="text-white font-bold text-xl">
                     {item.value}
                   </h3>
 
@@ -230,14 +230,14 @@ const Hero = () => {
             </div>
 
             {/* Reviews */}
-            <div className="flex flex-wrap items-center gap-4 mt-10">
+            <div className="flex flex-wrap items-center gap-3 mt-5">
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4].map((id) => (
                   <img
                     key={id}
                     src={`https://i.pravatar.cc/100?img=${id}`}
                     alt=""
-                    className="w-11 h-11 rounded-full border-2 border-white"
+                    className="w-8 h-8 rounded-full border-2 border-white"
                   />
                 ))}
               </div>
@@ -266,15 +266,15 @@ const Hero = () => {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="relative w-full max-w-lg"
+            className="relative w-full max-w-md"
           >
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-square transform -translate-y-10 lg:-translate-y-24">
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-square transform -translate-y-10">
               <img
                 src={PrinavHero2}
                 alt="Student"
                 className="
       w-full
-      max-w-[520px]
+      max-w-[420px]
       object-contain
       [mask-image:radial-gradient(circle,white_75%,transparent_100%)]
       [-webkit-mask-image:radial-gradient(circle,white_75%,transparent_100%)]
@@ -285,7 +285,7 @@ const Hero = () => {
         </div>
         {/* Companies */}
 
-        <div className="mt-28 overflow-hidden">
+        <div className="mt-12 overflow-hidden">
           <div className="text-center mb-14">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -300,7 +300,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-white text-4xl md:text-5xl font-bold mt-4"
+              className="text-white text-2xl md:text-3xl font-bold mt-2"
             >
               Distinguished Organizations
 

@@ -72,7 +72,7 @@ function EnrollmentForm() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-24 bg-[#020b14] text-white">
+    <section className="relative overflow-hidden pt-2 pb-16 bg-[#020b14] text-white">
       
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden">

@@ -95,7 +95,7 @@ export default function SkillTracksSection() {
   const activeCourses = COURSE_DATA[activeTab] || [];
 
   return (
-    <section className="relative w-full min-h-screen bg-[#020b14] text-white flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#020b14] text-white pt-10 pb-4 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans">
       
       {/* Aurora Ambient Glow Overlays */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none select-none" />

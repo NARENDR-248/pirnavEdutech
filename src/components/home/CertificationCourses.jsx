@@ -242,7 +242,7 @@ export default function CertificationCourses() {
   return (
     <section
       aria-labelledby={sectionTitleId}
-      className="relative w-full min-h-screen bg-gradient-to-b from-[#0F172A] to-[#172554] text-slate-100 py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden antialiased select-none"
+      className="relative w-full bg-gradient-to-b from-[#0F172A] to-[#172554] text-slate-100 pt-6 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden antialiased select-none"
     >
       {/* Structural Decorative Background Lights */}
       <div className="absolute top-0 left-1/3 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[180px] pointer-events-none transform -translate-x-1/2" />
