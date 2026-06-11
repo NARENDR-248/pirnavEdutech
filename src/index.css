@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* =========================
+   GLOBAL RESET
+========================= */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* =========================
+   SCROLLBAR HIDE
+========================= */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* =========================
+   SWIPER PAGINATION
+========================= */
+.swiper-pagination-bullet {
+  background: #94a3b8 !important;
+  opacity: 1 !important;
+  width: 10px;
+  height: 10px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2563eb !important;
+  width: 22px !important;
+  border-radius: 20px !important;
+}
+
+/* Oracle Swiper Pagination */
+.oracleSwiper .swiper-pagination {
+  margin-top: 30px;
+}
+
+.oracleSwiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+}
+
+.oracleSwiper .swiper-pagination-bullet-active {
+  width: 32px;
+  border-radius: 999px;
+  background: #22d3ee;
+}
+
+/* =========================
+   SWIPER NAVIGATION BUTTONS
+========================= */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 56px !important;
+  height: 56px !important;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  color: #2563eb !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+/* Generic scroll (marquee base) */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+/* Success scroll */
+@keyframes success-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-success-scroll {
+  animation: success-scroll 30s linear infinite;
+}
+
+/* Spin */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Floating logo */
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.logo-float {
+  animation: floatLogo 3s ease-in-out infinite;
+}
+
+/* =========================
+   MARQUEE
+========================= */
+.marquee {
+  animation: scroll 60s linear infinite;
+}
+
+.marquee:hover {
+  animation-duration: 60s;
+}
