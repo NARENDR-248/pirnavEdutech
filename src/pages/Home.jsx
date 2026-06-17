@@ -20,12 +20,15 @@ import SkillTracksSection from "./SkillTracksSection";
 import PremiumDashboard from "./PremiumDashboard";
 import StudentReviews from "./StudentReviews";
 import CertificationCourses from "../components/home/CertificationCourses";
+import { useThemeContext } from "../context/ThemeContext";
 
 function Home() {
+  const{isDark}=useThemeContext()
   return (
+
     <>
       <Navbar />
-      <div className="relative z-10 pb-24">
+      <div cclassName={isDark ? "bg-slate-950 text-white" : "bg-slate-50 text-slate-900"}>
         <Hero />
 
         <EnrollmentForm />

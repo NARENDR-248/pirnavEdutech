@@ -10,10 +10,9 @@ import { useNavigate } from "react-router-dom";
 
 const ReactHeroSection = () => {
   const navigate = useNavigate();
-
-  const handleEnroll = () => {
-    navigate("/contact");
-  };
+const handleEnroll = () => {
+  navigate("/checkout");
+};
 
   const handleDemo = () => {
     navigate("/react-curriculum");
