@@ -1,4 +1,6 @@
 
+
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Bot } from "lucide-react";
@@ -26,7 +28,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="relative min-h-screen bg-[#020b14] text-white px-4 py-20 overflow-hidden">
+    <section className="relative bg-[#020b14] text-white px-4 pt-6 pb-12 overflow-hidden">
 
       {/* Glow Background */}
       <div className="absolute w-[400px] h-[400px] bg-cyan-500/10 blur-[140px] top-0 left-0" />
@@ -38,7 +40,7 @@ export default function FAQSection() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-300 text-xs">
             <Sparkles size={14} />

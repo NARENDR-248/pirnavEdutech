@@ -1,3 +1,5 @@
+
+
 /**
  * WhyChooseUs.jsx — Fixed & Production-Ready
  *
@@ -101,9 +103,9 @@ export default function WhyChooseUs() {
      * `overflow-hidden` keeps the absolute glow orbs contained to this section.
      */
     <section
-      id="why-us"
-      className="relative overflow-hidden bg-[#020617] py-16 text-white md:py-20"
-    >
+  id="why-us"
+  className="relative overflow-hidden bg-[#020617] pt-8 pb-12 text-white md:pt-10 md:pb-16"
+>
 
       {/* ── Background atmosphere ─────────────────────────────────────── */}
       {/* FIX 2 — pointer-events-none so glows never intercept clicks */}

@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { FiArrowRight, FiPhoneCall, FiPlayCircle, FiUsers, FiAward, FiPieChart, FiStar } from "react-icons/fi";
 
@@ -10,7 +11,7 @@ export default function AdmissionHero() {
   ];
 
   return (
-   <section className="max-w-[1400px] mx-auto px-4 lg:px-8 pt-6 md:pt-12 lg:pt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section className="max-w-[1400px] mx-auto px-4 lg:px-8 pt-2 md:pt-6 lg:pt-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       {/* Left Column Content */}
       <div className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left">
         <motion.div
@@ -24,17 +25,17 @@ export default function AdmissionHero() {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tight text-white leading-[1.15]"
-        >
-          Build Your Future With{" "}
-          <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
-            Industry-Led Certification
-          </span>{" "}
-          Programs
-        </motion.h1>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: 0.1 }}
+  className="font-outfit text-3xl md:text-4xl xl:text-5xl font-black tracking-tight text-white leading-[1.15]"
+>
+  Build Your Future With{" "}
+  <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+    Industry-Led Certification
+  </span>{" "}
+  Programs
+</motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -51,12 +52,13 @@ export default function AdmissionHero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap gap-4 pt-2"
         >
-          <button className="group relative flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-500 hover:to-purple-500 transition-all duration-300 transform active:scale-95 shadow-lg shadow-purple-500/25">
+          <button className="group relative flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-xl hover:from-blue-500 hover:to-purple-500 transition-all duration-300 transform active:scale-95 shadow-lg shadow-purple-500/25">
             Apply Now
             <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
-          <button className="flex items-center gap-2 px-7 py-4 bg-slate-800/60 text-slate-200 font-semibold rounded-xl border border-slate-700 hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-95 backdrop-blur-md">
-            <FiPhoneCall className="text-blue-400" />
+
+          <button className="flex items-center gap-2 px-5 py-2.5 bg-slate-800/60 text-slate-200 text-sm font-semibold rounded-xl border border-slate-700 hover:bg-slate-800 hover:text-white transition-all duration-200 active:scale-95 backdrop-blur-md">
+            <FiPhoneCall className="text-blue-400 text-sm" />
             Talk To Counselor
           </button>
         </motion.div>
@@ -82,26 +84,26 @@ export default function AdmissionHero() {
       </div>
 
       {/* Right Column Visuals */}
-      <div className="lg:col-span-5 relative flex items-center justify-center min-h-[450px] lg:min-h-[550px]">
+      <div className="lg:col-span-5 relative flex items-center justify-center min-h-[450px] lg:min-h-[550px] lg:-translate-y-8">
         {/* Animated Radial Rings */}
         <div className="absolute w-[350px] sm:w-[450px] h-[350px] sm:h-[450px] rounded-full border border-blue-500/20 animate-[spin_40s_linear_infinite]" />
         <div className="absolute w-[280px] sm:w-[360px] h-[280px] sm:h-[360px] rounded-full border border-dashed border-purple-500/20 animate-[spin_20s_linear_infinite_reverse]" />
         <div className="absolute w-[400px] h-[400px] bg-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
 
         {/* Hero Student Placeholder Avatar Area */}
-      <div className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full overflow-hidden border-2 border-slate-700/50 shadow-2xl bg-gradient-to-b from-slate-800 via-slate-900 to-[#030B24] flex items-center justify-center group">
+        <div className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full overflow-hidden border-2 border-slate-700/50 shadow-2xl bg-gradient-to-b from-slate-800 via-slate-900 to-[#030B24] flex items-center justify-center group">
 
-  {/* Overlay Glow */}
-  <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 opacity-60 mix-blend-overlay z-10" />
+          {/* Overlay Glow */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 opacity-60 mix-blend-overlay z-10" />
 
-  {/* Image */}
-  <img
-    src="https://i.pinimg.com/736x/e9/3a/09/e93a0996a2d838b7a5dac7eada0117f5.jpg"
-    alt="Student"
-    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-  />
+          {/* Image */}
+          <img
+            src="https://i.pinimg.com/736x/e9/3a/09/e93a0996a2d838b7a5dac7eada0117f5.jpg"
+            alt="Student"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
 
-</div>
+        </div>
 
         {/* Floating Badges */}
         <motion.div

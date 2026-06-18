@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { motion } from "framer-motion";
 import { FaPlay, FaStar, FaUsers, FaBriefcase, FaAward, FaArrowRight } from "react-icons/fa";
@@ -158,8 +160,8 @@ const Hero = () => {
                   <FaArrowRight className="ml-2 text-xs group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
-             <button className={`${th.secondaryButton(isDark)} px-4 py-2 text-sm`}>
-  <div className={`${th.secondaryButtonIconWrap(isDark)} w-6 h-6`}>
+             <button className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-slate-300 dark:border-white/20 bg-white dark:bg-white/10 text-slate-900 dark:text-white backdrop-blur-xl text-xs font-medium hover:bg-slate-100 dark:hover:bg-white/20 transition-all duration-300">
+  <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center">
     <FaPlay className="text-[10px]" />
   </div>
   Watch Demo

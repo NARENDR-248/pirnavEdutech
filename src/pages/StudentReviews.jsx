@@ -1,3 +1,5 @@
+
+
 /**
  * StudentReviews.jsx  — Fixed & Production-Ready
  *
@@ -20,6 +22,7 @@
 import React from "react";
 import { FaLinkedinIn, FaStar, FaQuoteRight } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const TESTIMONIALS_DATA = [
@@ -181,7 +184,7 @@ export default function StudentReviews() {
   return (
     <section
       id="reviews"
-      className="relative w-full overflow-hidden bg-[#020b14] py-16 text-slate-100 md:py-20 font-sans"
+      className="relative w-full overflow-hidden bg-[#020b14] py-8 md:py-12 text-slate-100 font-sans"
     >
       {/* ── Background atmosphere ──────────────────────────────────────── */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -209,7 +212,7 @@ export default function StudentReviews() {
           Now: column on mobile, row with `justify-between` from sm upward.
           `flex-wrap` ensures the button never overlaps the heading block.
         */}
-        <header className="mb-8 flex flex-wrap items-end justify-between gap-5 border-b border-white/[0.06] pb-6">
+        <header className="mb-5 flex flex-wrap items-end justify-between gap-4 border-b border-white/[0.06] pb-4">
           <div>
             {/* Eyebrow tag */}
             <span className="inline-flex items-center rounded-full border border-cyan-400/20
@@ -254,11 +257,24 @@ export default function StudentReviews() {
           so the profile footer always anchors to the bottom regardless of
           how much review text there is.
         */}
-        <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 xl:grid-cols-3 lg:gap-5">
-          {TESTIMONIALS_DATA.map((item) => (
-            <ReviewCard key={item.id} item={item} />
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 25,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+          className="flex gap-5 w-max"
+        >
+          {[...TESTIMONIALS_DATA, ...TESTIMONIALS_DATA].map((item, index) => (
+            <div
+              key={`${item.id}-${index}`}
+              className="w-[350px] flex-shrink-0"
+            >
+              <ReviewCard item={item} />
+            </div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

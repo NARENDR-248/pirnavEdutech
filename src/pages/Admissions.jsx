@@ -40,15 +40,10 @@ export default function Admissions() {
         <SuccessStories />
         
         {/* Dual Column Layout for Form + FAQ to mimic high-converting structures */}
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7 xl:col-span-8 order-2 lg:order-1">
-            <FAQ />
-          </div>
-          <div className="lg:col-span-5 xl:col-span-4 order-1 lg:order-2 sticky top-8">
-            <AdmissionForm />
-          </div>
-        </div>
+        <AdmissionForm/>
 
+        <FAQ/>
+     
        
       </div>
       <Footer />

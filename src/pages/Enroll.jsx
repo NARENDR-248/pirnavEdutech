@@ -1,192 +1,216 @@
+
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
-import {
-  FaUserGraduate,
-  FaLaptopCode,
-  FaCertificate,
-  FaBriefcase,
-  FaArrowRight,
-} from "react-icons/fa";
-import Navbar from "../components/common/Navbar";
-import Footer from "../components/common/Footer";
+import { FaUserGraduate, FaBriefcase, FaChalkboardTeacher } from "react-icons/fa";
+import { useThemeContext } from "../context/ThemeContext";
+import { th } from "../theam/theam";
 
-function StatTile({ value, label, color }) {
-  return (
-    <div className="bg-white/10 rounded-xl p-3 text-center flex flex-col items-center justify-center gap-0.5">
-      <span className={`text-xl font-extrabold leading-tight ${color}`}>{value}</span>
-      <span className="text-[11px] text-slate-300 tracking-wide">{label}</span>
-    </div>
-  );
-}
+function EnrollmentForm() {
+  const { isDark } = useThemeContext();
 
-function BenefitRow({ icon: Icon, color, title, desc }) {
+  const [formData, setFormData] = useState({
+    topic: "", name: "", email: "", phone: "", experience: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await axios.post("http://localhost:3000/api/register", formData);
+      toast.success(res.data.message);
+      setFormData({ topic: "", name: "", email: "", phone: "", experience: "" });
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const stats = [
+    { icon: <FaUserGraduate />,      value: "500+", label: "Students Trained" },
+    { icon: <FaChalkboardTeacher />, value: "50+",  label: "Industry Mentors" },
+    { icon: <FaBriefcase />,         value: "95%",  label: "Placement Success" },
+  ];
+
+  // ── Input class — adapts to dark/light mode ──────────────────────────────
+  const inputCls = `
+    w-full rounded-2xl px-5 py-4 text-sm outline-none transition-all duration-300
+    ${isDark
+      ? "bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+      : "bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+    }
+  `;
+
   return (
-    <div className="flex items-start gap-3">
-      <span className={`mt-0.5 shrink-0 ${color}`}>
-        <Icon size={16} />
-      </span>
-      <div>
-        <h3 className="font-semibold text-white text-sm leading-tight">{title}</h3>
-        <p className="text-slate-400 text-xs mt-0.5 leading-snug">{desc}</p>
+    // ── FIX 1: min-h-screen + flex flex-col so section fills viewport ──────
+    <section
+  className={`
+    relative overflow-hidden transition-colors duration-300
+    py-0
+    ${th.section(isDark)}
+  `}
+>
+      {/* Background glows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-5%] h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[180px]" />
+        <div className="absolute bottom-[-10%] right-[-5%] h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[180px]" />
       </div>
-    </div>
-  );
-}
 
-export default function Enroll() {
-  return (
-    <>
-      <Navbar />
+      {/* ── FIX 2: consistent py so content never gets clipped ───────────── */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 py-0">
 
-      {/*
-        ✅ CORRECT APPROACH:
-        - NO h-screen on the wrapper (that clips content)
-        - NO overflow-hidden on the page shell (that hides cards)
-        - Section uses min-h with calc() to subtract navbar height (~64px)
-        - Content is compact enough to fit, but CAN scroll if viewport is tiny
-        - py-8 gives breathing room without pushing cards off screen
-      */}
-      <section
-        className="
-          relative
-          min-h-[calc(100vh-64px)]
-          flex flex-col items-center justify-center
-          bg-gradient-to-br from-[#0F172A] via-[#12367D] to-[#0F766E]
-          py-8 px-4 sm:px-6
-          overflow-hidden
-        "
-      >
-        {/* Blur orbs */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-[120px]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-blue-500/20 blur-[120px]"
-        />
+        {/* ── FIX 3: gap-10 instead of gap-16 so both columns fit ────────── */}
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col gap-5">
-
-          {/* ── Heading ── */}
-          <motion.header
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-            className="text-center"
+          {/* ── LEFT ─────────────────────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="flex flex-col gap-6"
           >
-            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-medium text-cyan-300">
-              🚀 Admissions Open 2026
+            {/* Badge */}
+            <span
+              className={`
+                self-start inline-flex items-center gap-2 px-4 py-2
+                rounded-full border text-sm font-semibold
+                ${th.textSecondary(isDark)}
+              `}
+            >
+              🚀 Start Your Learning Journey
             </span>
 
-            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-black leading-tight text-white">
-              Start Your{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Tech Career
+            {/* ── FIX 4: heading size stepped down so it fits on one screen */}
+            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-black leading-tight ${th.textPrimary(isDark)}`}>
+              Secure Your Role In
+              <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                The Technology Sector
               </span>
-            </h1>
+            </h2>
 
-            <p className="mx-auto mt-2 max-w-xl text-sm sm:text-base text-slate-300">
-              Join 20,000+ learners, build real-world projects, and unlock placement opportunities.
+            <p className={`text-base leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+              Learn from industry experts, build real-world projects, prepare for
+              interviews, and get placement assistance. Join thousands of students
+              building successful careers in technology.
             </p>
-          </motion.header>
 
-          {/* ── Cards grid ── */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-stretch">
+            {/* Stat cards */}
+            <div className="grid grid-cols-3 gap-4">
+              {stats.map((item, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className={`
+                    rounded-2xl p-4 shadow-md transition-all
+                    ${isDark
+                      ? "bg-white/5 border border-white/10 backdrop-blur-xl"
+                      : "bg-white border border-slate-200"
+                    }
+                  `}
+                >
+                  <div className={`text-xl mb-2 ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>
+                    {item.icon}
+                  </div>
+                  <p className={`text-2xl font-bold ${th.textPrimary(isDark)}`}>{item.value}</p>
+                  <p className={`text-xs mt-1 ${isDark ? "text-slate-400" : "text-slate-500"}`}>{item.label}</p>
+                </motion.div>
+              ))}
+            </div>
 
-            {/* LEFT */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.45, delay: 0.08 }}
-              className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl"
+            {/* Feature tags */}
+            <div className={`flex flex-wrap gap-3 text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+              <span>✓ Live Classes</span>
+              <span>✓ Placement Support</span>
+              <span>✓ Real Projects</span>
+            </div>
+          </motion.div>
+
+          {/* ── RIGHT FORM ───────────────────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div
+              className={`
+                rounded-[28px] p-7 lg:p-9 shadow-xl border backdrop-blur-2xl
+                ${th.card(isDark)}
+              `}
             >
-              <div>
-                <h2 className="mb-3 text-base font-bold text-white">Why Join Pirnav?</h2>
-                <div className="flex flex-col gap-3">
-                  <BenefitRow icon={FaLaptopCode}  color="text-cyan-400"   title="Real Projects"    desc="Work on industry-level applications from day one." />
-                  <BenefitRow icon={FaCertificate}  color="text-green-400"  title="Certification"    desc="Industry-recognised certificates, accepted by 350+ partners." />
-                  <BenefitRow icon={FaBriefcase}    color="text-yellow-400" title="Placement Support" desc="Resume reviews, mock interviews, and referral network." />
-                  <BenefitRow icon={FaUserGraduate} color="text-pink-400"   title="Expert Mentors"   desc="Learn from professionals with 5–15 years of experience." />
-                </div>
-              </div>
-
-              <div className="mt-auto grid grid-cols-4 gap-2">
-                <StatTile value="20K+"  label="Students"  color="text-cyan-400"   />
-                <StatTile value="95%"   label="Placement" color="text-green-400"  />
-                <StatTile value="350+"  label="Partners"  color="text-yellow-400" />
-                <StatTile value="1000+" label="Batches"   color="text-pink-400"   />
-              </div>
-            </motion.div>
-
-            {/* RIGHT */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.45, delay: 0.12 }}
-              className="flex flex-col rounded-2xl bg-white p-5 shadow-xl"
-            >
-              <h2 className="text-base font-bold text-slate-900">Enroll Now</h2>
-              <p className="mt-0.5 mb-4 text-xs text-slate-500">
-                Fill in your details — we'll reach out within 24 hours.
+              <h3 className={`text-2xl font-bold ${th.textPrimary(isDark)}`}>
+                Free Career Consultation
+              </h3>
+              <p className={`mt-1 mb-6 text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                Fill out the form and our experts will contact you within 24 hours.
               </p>
 
-              <form
-                className="flex flex-col flex-1 gap-3"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <div className="grid grid-cols-2 gap-3">
+              {/* ── FIX 5: no <form> tag (React artifact rule) — use div + onClick */}
+              <div className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
                   <input
-                    type="text"
-                    placeholder="Full Name"
-                    autoComplete="name"
-                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
+                    type="text" name="name" placeholder="Full Name"
+                    value={formData.name} onChange={handleChange}
+                    className={inputCls}
                   />
                   <input
-                    type="email"
-                    placeholder="Email Address"
-                    autoComplete="email"
-                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
+                    type="email" name="email" placeholder="Email Address"
+                    value={formData.email} onChange={handleChange}
+                    className={inputCls}
                   />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
                   <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    autoComplete="tel"
-                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
+                    type="tel" name="phone" placeholder="Phone Number"
+                    value={formData.phone} onChange={handleChange}
+                    className={inputCls}
                   />
                   <select
-                    defaultValue=""
-                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
+                    name="experience" value={formData.experience}
+                    onChange={handleChange} className={inputCls}
                   >
-                    <option value="" disabled>Select Course</option>
-                    <option>React JS</option>
-                    <option>MERN Stack</option>
-                    <option>Python</option>
-                    <option>AI / ML</option>
+                    <option value="">Experience Level</option>
+                    <option value="Fresher">Fresher</option>
+                    <option value="0-1 Years">0–1 Years</option>
+                    <option value="1-3 Years">1–3 Years</option>
+                    <option value="3+ Years">3+ Years</option>
                   </select>
                 </div>
 
-                <textarea
-                  placeholder="Tell us your learning goals…"
-                  className="flex-1 min-h-[80px] w-full resize-none rounded-lg border border-slate-200 px-3 py-2.5 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
+                <input
+                  type="text" name="topic" placeholder="Interested Course"
+                  value={formData.topic} onChange={handleChange}
+                  className={inputCls}
                 />
 
-                <button
-                  type="submit"
-                  className="flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-sm font-semibold text-white shadow-md transition hover:opacity-90 hover:scale-[1.01] active:scale-[0.99]"
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  disabled={loading}
+                  onClick={handleSubmit}
+                  className="
+                    w-full py-4 rounded-2xl font-bold text-white text-sm
+                    bg-gradient-to-r from-cyan-500 to-blue-600
+                    shadow-lg hover:shadow-cyan-500/30
+                    disabled:opacity-60 disabled:cursor-not-allowed
+                    transition-all duration-300
+                  "
                 >
-                  Submit Application <FaArrowRight size={13} />
-                </button>
-              </form>
-            </motion.div>
+                  {loading ? "Submitting..." : "Book Free Consultation"}
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
 
-          </div>
         </div>
-      </section>
-
-      <Footer />
-    </>
+      </div>
+    </section>
   );
 }
+
+export default EnrollmentForm;

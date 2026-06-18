@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   FiCode, FiCpu, FiAward, FiCloud, FiDatabase, FiLayers,
@@ -115,9 +116,9 @@ export default function SkillTracksSection() {
   return (
     // FIX 1: min-h-screen + flex flex-col justify-center — fills viewport fully
     <section className="
-      relative w-full min-h-screen flex flex-col justify-center
-      bg-[#020b14] text-white overflow-hidden font-sans
-    ">
+  relative w-full
+  bg-[#020b14] text-white overflow-hidden font-sans
+">
 
       {/* Ambient glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-cyan-500/10 blur-[110px] pointer-events-none" />
@@ -129,7 +130,7 @@ export default function SkillTracksSection() {
       <div className="absolute top-1/2 right-[8%] w-1 h-1 bg-blue-400/40 rounded-full animate-pulse [animation-duration:2s]" />
 
       {/* FIX 2: consistent padding — py-10 gives breathing room without overflow */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 flex flex-col items-center">
 
         {/* Heading — FIX 3: reduced mb-10 → mb-6 so heading and tabs are tighter */}
         <div className="flex flex-col items-center text-center mb-6 group">
