@@ -9,191 +9,175 @@ import {
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 
-function Enroll() {
+function StatTile({ value, label, color }) {
+  return (
+    <div className="bg-white/10 rounded-xl p-3 text-center flex flex-col items-center justify-center gap-0.5">
+      <span className={`text-xl font-extrabold leading-tight ${color}`}>{value}</span>
+      <span className="text-[11px] text-slate-300 tracking-wide">{label}</span>
+    </div>
+  );
+}
+
+function BenefitRow({ icon: Icon, color, title, desc }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className={`mt-0.5 shrink-0 ${color}`}>
+        <Icon size={16} />
+      </span>
+      <div>
+        <h3 className="font-semibold text-white text-sm leading-tight">{title}</h3>
+        <p className="text-slate-400 text-xs mt-0.5 leading-snug">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+export default function Enroll() {
   return (
     <>
       <Navbar />
 
-      <section className=" bg-gradient-to-br from-[#0F172A] via-[#12367D] to-[#0F766E] py-5 mt-0 md:py-16 px-5 overflow-hidden relative">
-        
-        {/* Background Blur */}
-        <div className="absolute top-0 left-0 w-80 h-80 bg-cyan-500/20 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/20 blur-[120px] rounded-full"></div>
+      {/*
+        ✅ CORRECT APPROACH:
+        - NO h-screen on the wrapper (that clips content)
+        - NO overflow-hidden on the page shell (that hides cards)
+        - Section uses min-h with calc() to subtract navbar height (~64px)
+        - Content is compact enough to fit, but CAN scroll if viewport is tiny
+        - py-8 gives breathing room without pushing cards off screen
+      */}
+      <section
+        className="
+          relative
+          min-h-[calc(100vh-64px)]
+          flex flex-col items-center justify-center
+          bg-gradient-to-br from-[#0F172A] via-[#12367D] to-[#0F766E]
+          py-8 px-4 sm:px-6
+          overflow-hidden
+        "
+      >
+        {/* Blur orbs */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-[120px]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-blue-500/20 blur-[120px]"
+        />
 
-        <div className="max-w-6xl mx-auto relative z-10">
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col gap-5">
 
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
+          {/* ── Heading ── */}
+          <motion.header
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.45 }}
+            className="text-center"
           >
-            <span className="inline-block px-5 py-2 rounded-full bg-white/10 border border-white/20 text-cyan-300 font-medium">
+            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-medium text-cyan-300">
               🚀 Admissions Open 2026
             </span>
 
-            <h1 className="mt-5 text-4xl md:text-6xl font-black text-white">
-              Start Your
+            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-black leading-tight text-white">
+              Start Your{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                {" "}Tech Career
+                Tech Career
               </span>
             </h1>
 
-            <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="mx-auto mt-2 max-w-xl text-sm sm:text-base text-slate-300">
               Join 20,000+ learners, build real-world projects, and unlock placement opportunities.
             </p>
-          </motion.div>
+          </motion.header>
 
-          {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-6">
+          {/* ── Cards grid ── */}
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-stretch">
 
-            {/* LEFT CARD */}
+            {/* LEFT */}
             <motion.div
-              initial={{ opacity: 0, x: -60 }}
+              initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
-              className="
-                bg-white/10 backdrop-blur-xl
-                border border-white/10
-                rounded-[28px]
-                p-6 md:p-7
-                text-white
-                
-              "
+              transition={{ duration: 0.45, delay: 0.08 }}
+              className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl"
             >
-              <h2 className="text-2xl font-bold mb-6">Why Join Pirnav?</h2>
-
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <FaLaptopCode className="text-cyan-400 text-xl mt-1" />
-                  <div>
-                    <h3 className="font-semibold">Real Projects</h3>
-                    <p className="text-slate-300 text-sm">
-                      Work on industry-level applications.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <FaCertificate className="text-green-400 text-xl mt-1" />
-                  <div>
-                    <h3 className="font-semibold">Certification</h3>
-                    <p className="text-slate-300 text-sm">
-                      Industry-recognized certificates.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <FaBriefcase className="text-yellow-400 text-xl mt-1" />
-                  <div>
-                    <h3 className="font-semibold">Placement Support</h3>
-                    <p className="text-slate-300 text-sm">
-                      Resume + mock interviews.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <FaUserGraduate className="text-pink-400 text-xl mt-1" />
-                  <div>
-                    <h3 className="font-semibold">Expert Mentors</h3>
-                    <p className="text-slate-300 text-sm">
-                      Learn from top professionals.
-                    </p>
-                  </div>
+              <div>
+                <h2 className="mb-3 text-base font-bold text-white">Why Join Pirnav?</h2>
+                <div className="flex flex-col gap-3">
+                  <BenefitRow icon={FaLaptopCode}  color="text-cyan-400"   title="Real Projects"    desc="Work on industry-level applications from day one." />
+                  <BenefitRow icon={FaCertificate}  color="text-green-400"  title="Certification"    desc="Industry-recognised certificates, accepted by 350+ partners." />
+                  <BenefitRow icon={FaBriefcase}    color="text-yellow-400" title="Placement Support" desc="Resume reviews, mock interviews, and referral network." />
+                  <BenefitRow icon={FaUserGraduate} color="text-pink-400"   title="Expert Mentors"   desc="Learn from professionals with 5–15 years of experience." />
                 </div>
               </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-4 mt-8">
-                <div className="bg-white/10 rounded-xl p-4 text-center">
-                  <h3 className="text-2xl font-bold text-cyan-400">20K+</h3>
-                  <p className="text-sm">Students</p>
-                </div>
-
-                <div className="bg-white/10 rounded-xl p-4 text-center">
-                  <h3 className="text-2xl font-bold text-green-400">95%</h3>
-                  <p className="text-sm">Placement</p>
-                </div>
-
-                <div className="bg-white/10 rounded-xl p-4 text-center">
-                  <h3 className="text-2xl font-bold text-yellow-400">350+</h3>
-                  <p className="text-sm">Partners</p>
-                </div>
-
-                <div className="bg-white/10 rounded-xl p-4 text-center">
-                  <h3 className="text-2xl font-bold text-pink-400">1000+</h3>
-                  <p className="text-sm">Batches</p>
-                </div>
+              <div className="mt-auto grid grid-cols-4 gap-2">
+                <StatTile value="20K+"  label="Students"  color="text-cyan-400"   />
+                <StatTile value="95%"   label="Placement" color="text-green-400"  />
+                <StatTile value="350+"  label="Partners"  color="text-yellow-400" />
+                <StatTile value="1000+" label="Batches"   color="text-pink-400"   />
               </div>
             </motion.div>
 
-            {/* RIGHT CARD */}
+            {/* RIGHT */}
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
+              initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              className="
-                bg-white
-                rounded-[24px]
-                p-5 md:p-6
-                shadow-[0_15px_40px_rgba(0,0,0,0.1)]
-                
-              "
+              transition={{ duration: 0.45, delay: 0.12 }}
+              className="flex flex-col rounded-2xl bg-white p-5 shadow-xl"
             >
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">
-                Enroll Now
-              </h2>
-
-              <p className="text-slate-500 mb-5 text-sm">
-                Fill details and we will contact you.
+              <h2 className="text-base font-bold text-slate-900">Enroll Now</h2>
+              <p className="mt-0.5 mb-4 text-xs text-slate-500">
+                Fill in your details — we'll reach out within 24 hours.
               </p>
 
-              <form className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+              <form
+                className="flex flex-col flex-1 gap-3"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <div className="grid grid-cols-2 gap-3">
                   <input
                     type="text"
                     placeholder="Full Name"
-                    className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none"
+                    autoComplete="name"
+                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
                   />
-
                   <input
                     type="email"
-                    placeholder="Email"
-                    className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Email Address"
+                    autoComplete="email"
+                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
                   />
+                </div>
 
+                <div className="grid grid-cols-2 gap-3">
                   <input
                     type="tel"
-                    placeholder="Phone"
-                    className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Phone Number"
+                    autoComplete="tel"
+                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
                   />
-
-                  <select className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none">
-                    <option>Select Course</option>
+                  <select
+                    defaultValue=""
+                    className="h-10 w-full rounded-lg border border-slate-200 px-3 text-sm text-slate-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
+                  >
+                    <option value="" disabled>Select Course</option>
                     <option>React JS</option>
                     <option>MERN Stack</option>
                     <option>Python</option>
-                    <option>AI</option>
+                    <option>AI / ML</option>
                   </select>
                 </div>
 
                 <textarea
-                  rows="3"
-                  placeholder="Your Goals..."
-                  className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="Tell us your learning goals…"
+                  className="flex-1 min-h-[80px] w-full resize-none rounded-lg border border-slate-200 px-3 py-2.5 text-sm placeholder-slate-400 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25"
                 />
 
-             <button
-    type="submit"
-    className="
-      mt-4 w-full py-3 rounded-xl
-      bg-gradient-to-r from-blue-600 to-cyan-500
-      text-white font-semibold
-      flex items-center justify-center gap-2
-      hover:scale-[1.02] transition
-    "
-  >
-                  Submit Application <FaArrowRight />
+                <button
+                  type="submit"
+                  className="flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-sm font-semibold text-white shadow-md transition hover:opacity-90 hover:scale-[1.01] active:scale-[0.99]"
+                >
+                  Submit Application <FaArrowRight size={13} />
                 </button>
               </form>
             </motion.div>
@@ -206,5 +190,3 @@ function Enroll() {
     </>
   );
 }
-
-export default Enroll;

@@ -12,7 +12,7 @@ const ReactHeroSection = () => {
   const navigate = useNavigate();
 
   const handleEnroll = () => {
-    navigate("/contact");
+    navigate("/checkout");
   };
 
   const handleDemo = () => {

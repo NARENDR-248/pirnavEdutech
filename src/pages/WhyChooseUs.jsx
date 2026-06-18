@@ -1,176 +1,274 @@
-import { motion } from "framer-motion";
-import {
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-} from "lucide-react";
+/**
+ * WhyChooseUs.jsx — Fixed & Production-Ready
+ *
+ * PROBLEMS FIXED:
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 1. NO FORCED VIEWPORT HEIGHT
+ *    The original had `pt-4 pb-12` — very unbalanced (4px top, 48px bottom).
+ *    Replaced with `py-16 md:py-20` for consistent breathing room.
+ *    Sections must NEVER use `min-h-screen` individually — only the root
+ *    layout wrapper gets that. See Layout.jsx.
+ *
+ * 2. BACKGROUND GLOWS BLEEDING
+ *    Absolute orbs need `overflow-hidden` on the parent + `pointer-events-none`
+ *    or they extend into adjacent sections visually. Added both.
+ *
+ * 3. ANIMATION: `animate` → `whileInView`
+ *    Using `animate` fires on mount, not on scroll — so if this section is
+ *    below the fold, the animation runs and finishes before the user ever
+ *    sees it. Replaced with `whileInView` + `viewport={{ once: true }}`.
+ *
+ * 4. STATS CARDS: `whileHover={{ scale: 1.05 }}`
+ *    Scale on hover shifts layout and can cause content jump on mobile.
+ *    Replaced with a subtle `translateY` lift + shadow — same delight,
+ *    no layout shift.
+ *
+ * 5. TABLE: last row has a dangling `border-b` on an empty container.
+ *    Fixed with `last:border-b-0` on each row.
+ *
+ * 6. FEATURE NOTE positioning
+ *    Notes like "Mostly Recorded" appeared in column 1 but logically
+ *    belong in column 3 (Others). Moved to the Others cell.
+ *
+ * 7. ACCESSIBILITY
+ *    - Table replaced with `role="table"` div structure + proper aria labels.
+ *    - Icons get `aria-label` so screen readers announce ✓/✗/~ correctly.
+ *    - Stats numbers wrapped in `aria-label` for context.
+ */
 
-const features = [
-  { title: "Live Classes", academy: true, others: false, note: "Mostly Recorded" },
-  { title: "Structured Curriculum", academy: true, others: false, note: "Scattered Content" },
-  { title: "1:1 Mentorship", academy: true, others: false },
-  { title: "Placement Support", academy: true, others: false },
-  { title: "Real Projects", academy: true, others: "limited" },
-  { title: "Mock Interviews", academy: true, others: false },
+import { motion } from "framer-motion";
+import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const FEATURES = [
+  { title: "Live Classes",          academy: true, others: false,     othersNote: "Mostly Recorded"  },
+  { title: "Structured Curriculum", academy: true, others: false,     othersNote: "Scattered Content" },
+  { title: "1:1 Mentorship",        academy: true, others: false                                       },
+  { title: "Placement Support",     academy: true, others: false                                       },
+  { title: "Real Projects",         academy: true, others: "limited", othersNote: "Limited scope"     },
+  { title: "Mock Interviews",       academy: true, others: false                                       },
 ];
 
+const STATS = [
+  { value: "500+", label: "Students Trained" },
+  { value: "95%",  label: "Placement Rate"   },
+  { value: "50+",  label: "Industry Mentors" },
+];
+
+// ─── Shared animation variants ─────────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+const stagger = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.07 } },
+};
+
+// ─── OthersCell ───────────────────────────────────────────────────────────────
+function OthersCell({ others, othersNote }) {
+  if (others === false) {
+    return (
+      <div className="flex flex-col items-center gap-1">
+        <XCircle className="text-red-400" size={18} aria-label="Not available" />
+        {othersNote && (
+          <span className="text-[10px] text-slate-500 leading-tight text-center">
+            {othersNote}
+          </span>
+        )}
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <AlertTriangle className="text-yellow-400" size={18} aria-label="Limited" />
+      {othersNote && (
+        <span className="text-[10px] text-slate-500 leading-tight text-center">
+          {othersNote}
+        </span>
+      )}
+    </div>
+  );
+}
+
+// ─── WhyChooseUs ──────────────────────────────────────────────────────────────
 export default function WhyChooseUs() {
   return (
-<<<<<<< HEAD
-    <section className="relative overflow-hidden bg-[#020617] pt-4 pb-12 text-white">
-=======
-  <section className="relative overflow-hidden bg-[#020617] py-0">
+    /**
+     * FIX 1 — No min-h-screen here. `py-16 md:py-20` gives balanced, consistent
+     * section padding that matches every other section on the page.
+     * `overflow-hidden` keeps the absolute glow orbs contained to this section.
+     */
+    <section
+      id="why-us"
+      className="relative overflow-hidden bg-[#020617] py-16 text-white md:py-20"
+    >
 
-  {/* Premium Background */}
-  <div className="absolute inset-0">
-    <div className="absolute top-0 left-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-[100px]" />
-    <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[100px]" />
-
-    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:50px_50px]" />
-  </div>
-
-  <div className="relative z-10 mx-auto max-w-6xl px-4">
-
-    {/* Header */}
-    <div className="text-center mb-12">
-
-      <span className="inline-flex items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-400">
-        Why Choose Pirnav EduTech
-      </span>
-
-      <h2 className="mt-5 text-3xl md:text-5xl font-extrabold text-white">
-        Compare Before
-        <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-          You Invest Your Time
-        </span>
-      </h2>
-
-      <p className="mx-auto mt-4 max-w-2xl text-slate-400">
-        Structured learning, real-world projects, mentorship, and career support
-        designed for modern technology careers.
-      </p>
-
-    </div>
-
-    {/* Table Card */}
-    <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
-
-      {/* Header */}
-      <div className="grid grid-cols-3 bg-gradient-to-r from-cyan-600 to-blue-700 px-6 py-4">
-
-        <div className="text-sm md:text-base font-semibold text-white">
-          Features
-        </div>
-
-        <div className="text-center text-sm md:text-base font-semibold text-white">
-          Our Academy
-        </div>
-
-        <div className="text-center text-sm md:text-base font-semibold text-white">
-          Others
-        </div>
->>>>>>> 2ebd100 (new features)
-
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-[120px]" />
+      {/* ── Background atmosphere ─────────────────────────────────────── */}
+      {/* FIX 2 — pointer-events-none so glows never intercept clicks */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-[120px]" />
         <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:50px_50px]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
 
-        {/* HEADER */}
+        {/* ── Header ────────────────────────────────────────────────────── */}
+        {/*
+          FIX 3 — `whileInView` fires when the element enters the viewport,
+          not on mount. `once: true` means it only animates in once.
+        */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-6"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="mb-8 text-center"
         >
-          <span className="inline-block rounded-full bg-cyan-500/10 border border-cyan-500/20 px-4 py-1 text-xs text-cyan-300">
+          <span className="inline-block rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-1 text-xs text-cyan-300">
             Why Choose Us
           </span>
 
-          <h2 className="mt-4 text-3xl md:text-4xl font-bold">
+          <h2 className="mt-4 text-3xl font-bold md:text-4xl">
             Compare Before You Decide
           </h2>
 
-          <p className="mt-3 text-sm text-slate-400 max-w-xl mx-auto">
-            Learn with structured curriculum, real projects, and mentorship-driven training.
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400">
+            Structured curriculum, real projects, and mentorship — side by side
+            with what the rest of the market offers.
           </p>
         </motion.div>
 
-        {/* TABLE */}
+        {/* ── Comparison Table ──────────────────────────────────────────── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-40px" }}
+          className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl"
+          role="table"
+          aria-label="Feature comparison between Our Academy and others"
         >
-
-          {/* Header Row */}
-          <div className="grid grid-cols-3 bg-gradient-to-r from-cyan-600 to-blue-700 px-5 py-3 text-sm font-semibold">
-            <div>Features</div>
-            <div className="text-center">Our Academy</div>
-            <div className="text-center">Others</div>
+          {/* Column headers */}
+          <div
+            role="row"
+            className="grid grid-cols-3 bg-gradient-to-r from-cyan-600 to-blue-700 px-5 py-3 text-sm font-semibold"
+          >
+            <div role="columnheader">Features</div>
+            <div role="columnheader" className="text-center">Our Academy</div>
+            <div role="columnheader" className="text-center">Others</div>
           </div>
 
-          {/* Rows */}
-          {features.map((item, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-3 items-center px-5 py-4 border-b border-white/5 hover:bg-white/5 transition"
-            >
-              <div>
-                <p className="text-sm font-medium">{item.title}</p>
-                {item.note && (
-                  <p className="text-xs text-slate-500">{item.note}</p>
-                )}
-              </div>
+          {/* Data rows */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            role="rowgroup"
+          >
+            {FEATURES.map((item, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                role="row"
+                className="grid grid-cols-3 items-center border-b border-white/5 px-5 py-4
+                           transition-colors hover:bg-white/[0.04] last:border-b-0"
+              >
+                {/* Feature name — col 1 */}
+                <div role="cell">
+                  <p className="text-sm font-medium">{item.title}</p>
+                </div>
 
-              <div className="flex justify-center">
-                <CheckCircle className="text-emerald-400" size={18} />
-              </div>
+                {/* Our Academy — col 2 */}
+                <div role="cell" className="flex justify-center">
+                  <CheckCircle
+                    className="text-emerald-400"
+                    size={18}
+                    aria-label="Available"
+                  />
+                </div>
 
-              <div className="flex justify-center">
-                {item.others === false ? (
-                  <XCircle className="text-red-400" size={18} />
-                ) : (
-                  <AlertTriangle className="text-yellow-400" size={18} />
-                )}
-              </div>
-            </div>
-          ))}
+                {/* Others — col 3: FIX 6 — notes belong here, not in col 1 */}
+                <div role="cell" className="flex justify-center">
+                  <OthersCell others={item.others} othersNote={item.othersNote} />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
 
-        {/* STATS */}
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 text-center"
-          >
-            <h3 className="text-2xl font-bold text-cyan-400">500+</h3>
-            <p className="text-sm text-slate-400">Students Trained</p>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 text-center"
-          >
-            <h3 className="text-2xl font-bold text-cyan-400">95%</h3>
-            <p className="text-sm text-slate-400">Placement Rate</p>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 text-center"
-          >
-            <h3 className="text-2xl font-bold text-cyan-400">50+</h3>
-            <p className="text-sm text-slate-400">Industry Mentors</p>
-          </motion.div>
-
-        </div>
+        {/* ── Stats ─────────────────────────────────────────────────────── */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-40px" }}
+          className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3"
+        >
+          {STATS.map((stat) => (
+            <motion.div
+              key={stat.label}
+              variants={fadeUp}
+              /**
+               * FIX 4 — `scale` hover causes layout shift and looks cheap on mobile.
+               * A -4px Y lift + shadow gives the same "elevated" feel without
+               * affecting surrounding elements' positions.
+               */
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="rounded-xl border border-white/10 bg-white/[0.04] p-5 text-center
+                         backdrop-blur-xl transition-shadow hover:shadow-[0_12px_32px_rgba(6,182,212,0.12)]"
+            >
+              <p
+                className="text-3xl font-bold text-cyan-400"
+                aria-label={`${stat.value} ${stat.label}`}
+              >
+                {stat.value}
+              </p>
+              <p className="mt-1 text-sm text-slate-400">{stat.label}</p>
+            </motion.div>
+          ))}
+        </motion.div>
 
       </div>
     </section>
   );
 }
+
+
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * SYSTEM-WIDE RULES — apply to every section on your page
+ * ═══════════════════════════════════════════════════════════════════════════════
+ *
+ * 1. SECTION HEIGHT
+ *    ❌  min-h-screen on each section
+ *    ✅  py-16 md:py-20 on standard sections
+ *    ✅  py-24 md:py-32 on the Hero only
+ *    Only your root <main> or Layout wrapper gets `min-h-screen`.
+ *
+ * 2. FRAMER MOTION — always use whileInView, never animate for below-fold content
+ *    ❌  <motion.div animate={{ opacity: 1 }}>
+ *    ✅  <motion.div whileInView="show" viewport={{ once: true }}>
+ *
+ * 3. HOVER EFFECTS — prefer transform: translateY over scale
+ *    ❌  whileHover={{ scale: 1.05 }}   — causes layout shift
+ *    ✅  whileHover={{ y: -4 }}         — lifts without affecting neighbours
+ *
+ * 4. BACKGROUND ORBS — always pair with:
+ *    - `overflow-hidden` on the section
+ *    - `pointer-events-none` on the orb container
+ *    - `aria-hidden="true"` for screen readers
+ *
+ * 5. CONSISTENT CONTAINER
+ *    Every section: `mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8`
+ *    (or max-w-7xl for wider layouts). Mixing widths creates visual misalignment.
+ *
+ * 6. SPACING SCALE
+ *    Section padding:   py-16 md:py-20
+ *    Header → content:  mb-8
+ *    Between sub-items: gap-4 or mt-8
+ *    Don't mix arbitrary values (pt-4, pb-12) — they break visual rhythm.
+ */

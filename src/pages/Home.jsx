@@ -39,11 +39,7 @@ function Home() {
 
         {/* <SuccessStats /> */}
 
-<<<<<<< HEAD
-      {/* <PopularCourses /> */}
-=======
-        <PopularCourses />
->>>>>>> 2ebd100 (new features)
+        {/* <PopularCourses /> */}
 
         {/* <WatchCourse /> */}
 
