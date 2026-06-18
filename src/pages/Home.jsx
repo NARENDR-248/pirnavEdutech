@@ -48,7 +48,7 @@ function Home() {
         <WhyChooseUs />
 
         {/* <TechnologiesSection /> */}
-        <CertificationCourses />
+        {/* <CertificationCourses /> */}
 
         <FAQ />
 
