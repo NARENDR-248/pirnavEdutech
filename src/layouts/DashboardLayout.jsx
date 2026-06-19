@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Moon, Sun, Bell, User, Menu, X } from 'lucide-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Moon, Sun, Bell, User, Menu, X, LogIn } from 'lucide-react'
+import { Link, useLocation, Outlet } from 'react-router-dom'
 
 const NAV_ITEMS = [
-  { path: '/organization/registration', label: 'Registration' },
+  { path: '/organization/overview', label: 'Overview' },
   { path: '/organization/profile', label: 'Profile' },
+  { path: '/organization/branches', label: 'Branches' },
+  { path: '/organization/departments', label: 'Departments' },
+  { path: '/organization/teams', label: 'Teams' },
   { path: '/organization/settings', label: 'Settings' },
 ]
 
@@ -37,7 +40,7 @@ export default function DashboardLayout({ children }) {
           <div className="h-16 flex items-center justify-between">
             {/* Logo + Desktop Nav */}
             <div className="flex items-center gap-8">
-              <Link to="/organization/profile" className="flex items-center gap-2.5">
+              <Link to="/organization/overview" className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#7C3AED] flex items-center justify-center">
                   <span className="text-white font-bold text-sm">H</span>
                 </div>
@@ -88,6 +91,13 @@ export default function DashboardLayout({ children }) {
                   <Moon className="w-4 h-4 text-slate-500" />
                 )}
               </button>
+
+              <Link
+                to="/login"
+                className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors hidden sm:flex items-center gap-2"
+              >
+                <LogIn className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+              </Link>
 
               <button className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative hidden sm:block">
                 <Bell className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -156,7 +166,7 @@ export default function DashboardLayout({ children }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {children}
+        <Outlet />
       </motion.main>
     </div>
   )

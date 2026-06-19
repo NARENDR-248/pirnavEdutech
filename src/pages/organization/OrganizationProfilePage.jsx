@@ -1,239 +1,573 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
-  Building2,
-  Mail,
-  Globe,
-  Users,
-  MapPin,
-  Clock,
-  Edit3,
-  Save,
-  X,
-  Upload,
-  Loader2,
-  CheckCircle,
-  AlertCircle,
+  Building2, Users, MapPin, Clock, Globe, Mail, Phone, Calendar,
+  Edit3, Share2, Download, LayoutGrid, Layers,
+  CheckCircle, Circle, ChevronRight, UserPlus,
+  Briefcase, ArrowUpRight
 } from 'lucide-react'
+import {
+  PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid
+} from 'recharts'
 
-/* ─── Components ─── */
-const ProfileCard = ({ label, value, icon: Icon }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 8 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="flex items-start gap-3 p-4 bg-white dark:bg-slate-800/50 rounded-xl
-      border border-slate-100 dark:border-slate-700/50"
-  >
-    <div className="w-9 h-9 rounded-lg bg-[#2563EB]/10 flex items-center justify-center shrink-0">
-      <Icon className="w-4 h-4 text-[#2563EB]" />
-    </div>
-    <div className="min-w-0">
-      <p className="text-xs font-medium text-slate-400 uppercase tracking-wide">{label}</p>
-      <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5 truncate">
-        {value || <span className="text-slate-400 italic">Not set</span>}
-      </p>
-    </div>
-  </motion.div>
-)
-
-const AvatarUpload = ({ preview, onUpload }) => {
-  const inputRef = React.useRef(null)
-  const [dragging, setDragging] = useState(false)
-
-  const validate = (file) => {
-    const MAX_SIZE = 2 * 1024 * 1024
-    const ACCEPTED = ['image/png', 'image/jpeg', 'image/svg+xml']
-    if (!ACCEPTED.includes(file.type)) return 'Only PNG, JPG, SVG'
-    if (file.size > MAX_SIZE) return 'Max 2MB'
-    return null
-  }
-
-  const handleFile = (file) => {
-    const err = validate(file)
-    if (err) return alert(err)
-    onUpload(file)
-  }
-
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <div
-        onClick={() => inputRef.current?.click()}
-        onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={(e) => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files[0]) }}
-        className={`relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden cursor-pointer
-          border-2 border-dashed transition-all duration-200
-          ${dragging
-            ? 'border-[#2563EB] bg-[#2563EB]/5'
-            : 'border-slate-300 dark:border-slate-600 hover:border-[#2563EB]/50 bg-slate-50 dark:bg-slate-800/50'
-          }`}
-      >
-        {preview ? (
-          <img src={preview} alt="Org logo" className="w-full h-full object-cover" />
-        ) : (
-          <Building2 className="w-8 h-8 text-slate-400" />
-        )}
-        <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-          <Upload className="w-5 h-5 text-white" />
-        </div>
-      </div>
-      <input ref={inputRef} type="file" accept="image/*" className="hidden"
-        onChange={(e) => e.target.files[0] && handleFile(e.target.files[0])} />
-    </div>
-  )
-}
-
-/* ─── Mock Data ─── */
-const MOCK_ORG = {
+/* ──────────── MOCK DATA ──────────── */
+const ORG_DATA = {
+  id: 'org-001',
   name: 'Acme Corp',
-  email: 'hello@acme.com',
-  industry: 'Technology',
-  size: '51-200 employees',
+  email: 'hello@acmecorp.com',
+  phone: '+1 (555) 123-4567',
+  website: 'https://acmecorp.com',
+  industry: 'Technology & Software',
+  size: '501\u20131,000 employees',
   country: 'United States',
-  timezone: 'America/New_York',
-  logo: null,
-  createdAt: 'Jan 15, 2024',
-  status: 'active',
+  timezone: 'Eastern Time (UTC-5)',
+  address: '350 5th Avenue, Suite 300, New York, NY 10118',
+  contactPerson: 'Jane Smith',
+  foundedYear: 2018,
+  registrationNumber: 'HRMS-ORG-2024-00142',
+  description: 'Acme Corp is a leading enterprise technology company specialising in SaaS solutions for HR and people operations, serving over 500 organisations worldwide.',
+  employeeCount: 843,
+  activeBranches: 7,
+  departments: 8,
+  activeTeams: 24,
+  growthRate: 12.5,
+  branchGrowth: 8.3,
+  deptGrowth: 4.2,
+  teamGrowth: 15.7,
+  healthScore: 92,
+  profileCompletion: 100,
+  branchSetup: 88,
+  departmentSetup: 92,
+  teamSetup: 85,
 }
 
-/* ─── Main Page ─── */
-const OrganizationProfilePage = () => {
-  const [org, setOrg] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [editing, setEditing] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState({})
-  const [logoPreview, setLogoPreview] = useState(null)
+const RECENT_ACTIVITY = [
+  { id: 'a1', user: 'Jane Smith', action: 'updated the organization profile', target: 'Timezone & Contact Info', timestamp: '2 hours ago', initials: 'JS', color: 'from-blue-500 to-indigo-500' },
+  { id: 'a2', user: 'David Williams', action: 'added a new branch', target: 'London Office', timestamp: '1 day ago', initials: 'DW', color: 'from-emerald-500 to-teal-500' },
+  { id: 'a3', user: 'Sarah Chen', action: 'restructured department', target: 'Engineering \u2192 Frontend, Backend, DevOps', timestamp: '3 days ago', initials: 'SC', color: 'from-violet-500 to-purple-500' },
+  { id: 'a4', user: 'Marcus Johnson', action: 'assigned a new team', target: 'Product Design Team', timestamp: '5 days ago', initials: 'MJ', color: 'from-amber-500 to-orange-500' },
+  { id: 'a5', user: 'Raj Patel', action: 'enabled security policy', target: 'Two-Factor Authentication', timestamp: '1 week ago', initials: 'RP', color: 'from-rose-500 to-pink-500' },
+]
 
-  useEffect(() => {
-    // Simulate API fetch
-    const timer = setTimeout(() => {
-      setOrg(MOCK_ORG)
-      setForm(MOCK_ORG)
-      setLoading(false)
-    }, 600)
-    return () => clearTimeout(timer)
-  }, [])
+const QUICK_ACTIONS = [
+  { label: 'Add Branch', icon: Building2, gradient: 'from-blue-600 to-blue-400', desc: 'Register a new office location' },
+  { label: 'Add Department', icon: Layers, gradient: 'from-violet-600 to-purple-400', desc: 'Create a new department' },
+  { label: 'Create Team', icon: Users, gradient: 'from-emerald-600 to-teal-400', desc: 'Assemble a new team' },
+  { label: 'Invite Employees', icon: UserPlus, gradient: 'from-amber-600 to-orange-400', desc: 'Onboard new members' },
+]
 
-  const handleLogoUpload = useCallback((file) => {
-    const reader = new FileReader()
-    reader.onloadend = () => setLogoPreview(reader.result)
-    reader.readAsDataURL(file)
-  }, [])
+const DEPARTMENT_DISTRIBUTION = [
+  { name: 'Engineering', value: 156, color: '#2563EB' },
+  { name: 'Design', value: 34, color: '#7C3AED' },
+  { name: 'Marketing', value: 28, color: '#10B981' },
+  { name: 'Sales', value: 45, color: '#F59E0B' },
+  { name: 'HR', value: 18, color: '#EF4444' },
+  { name: 'Finance', value: 22, color: '#06B6D4' },
+  { name: 'Customer Success', value: 38, color: '#8B5CF6' },
+]
 
-  const handleSave = async () => {
-    setSaving(true)
-    try {
-      await new Promise((r) => setTimeout(r, 1200)) // API call
-      setOrg({ ...form, logo: logoPreview || org?.logo })
-      setEditing(false)
-    } finally {
-      setSaving(false)
-    }
-  }
+const TEAM_DISTRIBUTION = [
+  { name: 'Frontend', employees: 12 },
+  { name: 'Backend', employees: 18 },
+  { name: 'Design', employees: 8 },
+  { name: 'Sales', employees: 15 },
+  { name: 'Marketing', employees: 6 },
+  { name: 'Data', employees: 10 },
+]
 
-  const handleCancel = () => {
-    setForm(org)
-    setLogoPreview(null)
-    setEditing(false)
-  }
+const SETUP_STEPS = [
+  { label: 'Organization Registration', completed: true, date: 'Jan 15, 2024' },
+  { label: 'Organization Profile', completed: true, date: 'Jan 18, 2024' },
+  { label: 'Branch Management', completed: true, date: 'Feb 2, 2024' },
+  { label: 'Department Management', completed: true, date: 'Feb 14, 2024' },
+  { label: 'Team Management', completed: false, date: 'In progress' },
+]
 
-  /* ─── Loading ─── */
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#2563EB] animate-spin" />
-          <p className="text-sm text-slate-400">Loading profile...</p>
-        </div>
-      </div>
-    )
-  }
+const healthMetrics = [
+  { label: 'Profile Completion', value: ORG_DATA.profileCompletion, color: '#2563EB' },
+  { label: 'Branch Setup', value: ORG_DATA.branchSetup, color: '#7C3AED' },
+  { label: 'Department Setup', value: ORG_DATA.departmentSetup, color: '#10B981' },
+  { label: 'Team Setup', value: ORG_DATA.teamSetup, color: '#F59E0B' },
+]
 
-  /* ─── Empty / Error ─── */
-  if (!org) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <AlertCircle className="w-12 h-12 text-slate-300" />
-        <p className="text-sm text-slate-400">Organization not found</p>
-      </div>
-    )
-  }
+/* ──────────── SHARED COMPONENTS ──────────── */
 
-  /* ─── Main Render ─── */
+function Section({ title, subtitle, icon: Icon, children, className = '' }) {
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
-      {/* Header */}
-      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2563EB]/10 to-[#7C3AED]/10 flex items-center justify-center">
-              <Building2 className="w-5 h-5 text-[#2563EB]" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-                {org.name}
-              </h1>
-              <p className="text-sm text-slate-400">Organization Profile</p>
-            </div>
-          </div>
-
-          {!editing ? (
-            <button onClick={() => setEditing(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-[#2563EB]
-                hover:bg-[#2563EB]/5 rounded-xl transition-colors">
-              <Edit3 className="w-4 h-4" />
-              Edit
-            </button>
-          ) : (
-            <div className="flex items-center gap-2">
-              <button onClick={handleCancel}
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-600
-                  dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
-                <X className="w-4 h-4" />
-                Cancel
-              </button>
-              <button onClick={handleSave} disabled={saving}
-                className="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white
-                  bg-[#2563EB] hover:brightness-110 disabled:opacity-60 rounded-xl transition-all shadow-sm">
-                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                {saving ? 'Saving...' : 'Save'}
-              </button>
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`bg-white/70 dark:bg-slate-900/60 backdrop-blur-2xl border border-white/20 dark:border-slate-700/40
+        shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+        rounded-[24px] p-6 sm:p-8 ${className}`}
+      style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08) inset' }}
+    >
+      {title && (
+        <div className="flex items-start gap-3 mb-6 sm:mb-7">
+          {Icon && (
+            <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#2563EB]/10 to-[#7C3AED]/10
+              flex items-center justify-center shrink-0 ring-1 ring-[#2563EB]/10">
+              <Icon className="w-5 h-5 text-[#2563EB]" />
             </div>
           )}
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+              {title}
+            </h2>
+            {subtitle && (
+              <p className="text-sm text-slate-400 mt-0.5">{subtitle}</p>
+            )}
+          </div>
         </div>
-      </motion.div>
+      )}
+      {children}
+    </motion.div>
+  )
+}
 
-      {/* Logo */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mb-8">
-        <AvatarUpload
-          preview={logoPreview || org.logo}
-          onUpload={handleLogoUpload}
-        />
-      </motion.div>
+function Badge({ icon: Icon, label, className = '' }) {
+  return (
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-widest
+      rounded-full bg-white/15 dark:bg-white/10 text-white/90 backdrop-blur-sm border border-white/20 ${className}`}>
+      {Icon && <Icon className="w-3 h-3" />}
+      {label}
+    </span>
+  )
+}
 
-      {/* Info Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <ProfileCard label="Company Name" value={org.name} icon={Building2} />
-        <ProfileCard label="Email" value={org.email} icon={Mail} />
-        <ProfileCard label="Industry" value={org.industry} icon={Globe} />
-        <ProfileCard label="Company Size" value={org.size} icon={Users} />
-        <ProfileCard label="Country" value={org.country} icon={MapPin} />
-        <ProfileCard label="Timezone" value={org.timezone} icon={Clock} />
+/* ──────────── SECTION 1 \u2014 HERO ──────────── */
+function HeroSection({ org }) {
+  return (
+    <div className="relative overflow-hidden rounded-[24px] mb-6 sm:mb-8">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1E3A8A] via-[#2563EB]/90 to-[#7C3AED]/80" />
+      <div className="absolute inset-0 opacity-30"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'400\' height=\'400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cdefs%3E%3Cpattern id=\'grid\' width=\'40\' height=\'40\' patternUnits=\'userSpaceOnUse\'%3E%3Cpath d=\'M 40 0 L 0 0 0 40\' fill=\'none\' stroke=\'rgba(255,255,255,0.05)\' stroke-width=\'1\'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'url(%23grid)\'/%3E%3C/svg%3E")' }} />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#7C3AED]/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3" />
+
+      <div className="relative z-10 p-6 sm:p-8 lg:p-10">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+          <div className="flex items-center gap-5">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[20px] bg-white/20 backdrop-blur-md
+              flex items-center justify-center shadow-xl border border-white/20 shrink-0">
+              <Building2 className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">
+                {org.name}
+              </h1>
+              <p className="text-white/70 text-sm mt-1 max-w-md leading-relaxed">
+                {org.description}
+              </p>
+            </div>
+          </div>
+          <div className="hidden lg:block flex-1" />
+          <div className="flex flex-wrap gap-2">
+            <Badge icon={Briefcase} label={org.industry} />
+            <Badge icon={Users} label={org.size} />
+            <Badge icon={MapPin} label={org.country} />
+            <Badge icon={Clock} label={org.timezone} />
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-white/10">
+          <button className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white
+             bg-white/15 hover:bg-white/25 rounded-xl transition-all duration-200 backdrop-blur-sm
+             border border-white/10 hover:border-white/20 active:scale-95">
+            <Edit3 className="w-4 h-4" /> Edit Organization
+          </button>
+          <button className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white
+             bg-white/15 hover:bg-white/25 rounded-xl transition-all duration-200 backdrop-blur-sm
+             border border-white/10 hover:border-white/20 active:scale-95">
+            <Share2 className="w-4 h-4" /> Share Profile
+          </button>
+          <button className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white
+             bg-white/15 hover:bg-white/25 rounded-xl transition-all duration-200 backdrop-blur-sm
+             border border-white/10 hover:border-white/20 active:scale-95">
+            <Download className="w-4 h-4" /> Export Details
+          </button>
+        </div>
       </div>
-
-      {/* Bottom Meta */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-        className="mt-8 flex items-center justify-between text-xs text-slate-400 border-t
-          border-slate-100 dark:border-slate-700/50 pt-4">
-        <span>Member since {org.createdAt}</span>
-        <span className="flex items-center gap-1">
-          <CheckCircle className="w-3 h-3 text-green-500" />
-          {org.status}
-        </span>
-      </motion.div>
     </div>
   )
 }
 
-export default OrganizationProfilePage
+/* ──────────── SECTION 2 \u2014 KPI METRICS ──────────── */
+function KPIMetricsRow({ org }) {
+  const metrics = useMemo(() => [
+    { icon: Users, label: 'Total Employees', value: org.employeeCount, growth: org.growthRate, color: '#2563EB', bg: 'from-blue-500/20 to-blue-500/5' },
+    { icon: Building2, label: 'Branches', value: org.activeBranches, growth: org.branchGrowth, color: '#7C3AED', bg: 'from-violet-500/20 to-violet-500/5' },
+    { icon: Layers, label: 'Departments', value: org.departments, growth: org.deptGrowth, color: '#10B981', bg: 'from-emerald-500/20 to-emerald-500/5' },
+    { icon: LayoutGrid, label: 'Active Teams', value: org.activeTeams, growth: org.teamGrowth, color: '#F59E0B', bg: 'from-amber-500/20 to-amber-500/5' },
+  ], [org])
+
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+      {metrics.map((m, i) => (
+        <motion.div
+          key={m.label}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 * i, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={{ y: -4, scale: 1.02 }}
+          className="group relative bg-white/70 dark:bg-slate-900/60 backdrop-blur-2xl
+            border border-white/20 dark:border-slate-700/40 rounded-[20px] p-5 sm:p-6
+            transition-all duration-300 cursor-default overflow-hidden"
+          style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08) inset' }}
+        >
+          <div className={`absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br ${m.bg}
+            rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-11 h-11 rounded-[14px] bg-gradient-to-br from-white/50 to-white/10 dark:from-slate-800/50 dark:to-slate-800/10
+                flex items-center justify-center ring-1 ring-[#2563EB]/10">
+                <m.icon className="w-5 h-5" style={{ color: m.color }} />
+              </div>
+              <span className="inline-flex items-center gap-0.5 text-xs font-semibold px-2 py-0.5 rounded-full
+                bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <ArrowUpRight className="w-3 h-3" /> {m.growth}%
+              </span>
+            </div>
+            <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+              {m.value.toLocaleString()}
+            </p>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 font-medium">{m.label}</p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
+/* ──────────── SECTION 3 \u2014 ORGANIZATION INFO ──────────── */
+function InfoRow({ icon: Icon, label, value }) {
+  return (
+    <div className="flex items-center gap-3 py-3 group">
+      <div className="w-9 h-9 rounded-[10px] bg-slate-100 dark:bg-slate-800/60 flex items-center justify-center
+        shrink-0 group-hover:bg-[#2563EB]/10 transition-colors duration-200">
+        <Icon className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-[#2563EB] transition-colors duration-200" />
+      </div>
+      <div className="min-w-0">
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{label}</p>
+        <p className="text-sm font-medium text-slate-900 dark:text-slate-100 mt-0.5 truncate">
+          {value || <span className="text-slate-400 italic">Not set</span>}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function OrganizationInfo({ org }) {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+      <Section title="Company Information" subtitle="Core organization details" className="!p-0">
+        <div className="px-6 sm:px-8 pb-6 sm:pb-8 divide-y divide-slate-100 dark:divide-slate-700/30">
+          <InfoRow icon={Building2} label="Company Name" value={org.name} />
+          <InfoRow icon={Mail} label="Email" value={org.email} />
+          <InfoRow icon={Briefcase} label="Industry" value={org.industry} />
+          <InfoRow icon={Globe} label="Website" value={org.website} />
+          <InfoRow icon={Calendar} label="Founded" value={String(org.foundedYear)} />
+          <InfoRow icon={FileText} label="Registration No." value={org.registrationNumber} />
+        </div>
+      </Section>
+      <Section title="Contact Information" subtitle="Primary contact details" className="!p-0">
+        <div className="px-6 sm:px-8 pb-6 sm:pb-8 divide-y divide-slate-100 dark:divide-slate-700/30">
+          <InfoRow icon={UserIcon} label="Contact Person" value={org.contactPerson} />
+          <InfoRow icon={Phone} label="Phone" value={org.phone} />
+          <InfoRow icon={MapPin} label="Country" value={org.country} />
+          <InfoRow icon={Clock} label="Timezone" value={org.timezone} />
+          <InfoRow icon={MapPin} label="Address" value={org.address} />
+        </div>
+      </Section>
+    </div>
+  )
+}
+
+function FileText(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+      <line x1="10" y1="9" x2="8" y2="9"/>
+    </svg>
+  )
+}
+
+function UserIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+  )
+}
+
+/* ──────────── SECTION 4 \u2014 HEALTH SCORE ──────────── */
+function HealthScore({ org }) {
+  const score = org.healthScore
+  const circumference = 2 * Math.PI * 56
+  const strokeDashoffset = circumference - (score / 100) * circumference
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 mb-6 sm:mb-8">
+      <Section className="lg:col-span-2">
+        <div className="flex flex-col items-center py-4 sm:py-6">
+          <div className="relative w-40 h-40 sm:w-44 sm:h-44 mb-5">
+            <svg className="w-full h-full -rotate-90" viewBox="0 0 128 128">
+              <circle cx="64" cy="64" r="56" fill="none" stroke="currentColor"
+                className="text-slate-100 dark:text-slate-800" strokeWidth="8" />
+              <circle cx="64" cy="64" r="56" fill="none" stroke="url(#healthGradient)"
+                strokeWidth="8" strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                className="transition-all duration-1000 ease-out"
+              />
+              <defs>
+                <linearGradient id="healthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#2563EB" />
+                  <stop offset="100%" stopColor="#7C3AED" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">{score}%</span>
+              <span className="text-xs font-medium text-slate-400 mt-1">Health Score</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 text-sm">
+            <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
+              <ArrowUpRight className="w-4 h-4" /> +4.2% from last month
+            </span>
+          </div>
+        </div>
+      </Section>
+      <Section className="lg:col-span-3">
+        <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-6">Performance Metrics</h3>
+        <div className="space-y-5">
+          {healthMetrics.map((m) => (
+            <div key={m.label}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{m.label}</span>
+                <span className="text-sm font-bold text-slate-900 dark:text-white">{m.value}%</span>
+              </div>
+              <div className="relative h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${m.value}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-y-0 left-0 rounded-full"
+                  style={{ background: `linear-gradient(90deg, ${m.color}, ${m.color}dd)` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+    </div>
+  )
+}
+
+/* ──────────── SECTION 5 \u2014 SETUP PROGRESS ──────────── */
+function SetupProgress() {
+  return (
+    <Section title="Setup Progress" subtitle="Onboarding completion status">
+      <div className="relative">
+        <div className="absolute left-[19px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-[#2563EB] via-[#7C3AED] to-slate-200 dark:to-slate-700" />
+        <div className="space-y-0">
+          {SETUP_STEPS.map((step, i) => (
+            <motion.div
+              key={step.label}
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.08 * i, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative flex items-start gap-5 pb-8 last:pb-0"
+            >
+              <div className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                step.completed
+                  ? 'bg-gradient-to-br from-[#2563EB] to-[#7C3AED] shadow-lg shadow-[#2563EB]/20'
+                  : 'bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-600'
+              }`}>
+                {step.completed ? <CheckCircle className="w-5 h-5 text-white" /> : <Circle className="w-5 h-5 text-slate-400" />}
+              </div>
+              <div className="flex-1 min-w-0 pt-1.5">
+                <p className={`text-sm font-semibold ${step.completed ? 'text-slate-900 dark:text-white' : 'text-slate-400'}`}>
+                  {step.label}
+                </p>
+                <p className="text-xs text-slate-400 mt-0.5">{step.date}</p>
+              </div>
+              {step.completed ? (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold
+                  bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full shrink-0">
+                  <CheckCircle className="w-3 h-3" /> Done
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold
+                  bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full shrink-0">
+                  <Circle className="w-3 h-3" /> Pending
+                </span>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+/* ──────────── SECTION 6 \u2014 RECENT ACTIVITY ──────────── */
+function RecentActivity() {
+  return (
+    <Section title="Recent Activity" subtitle="Latest organization changes">
+      <div className="divide-y divide-slate-100 dark:divide-slate-700/30">
+        {RECENT_ACTIVITY.map((item, i) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, x: -12 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.05 * i, duration: 0.3 }}
+            className="flex items-start gap-4 py-4 first:pt-0 last:pb-0 group"
+          >
+            <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center shrink-0 shadow-sm`}>
+              <span className="text-[11px] font-bold text-white">{item.initials}</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-slate-700 dark:text-slate-300">
+                <span className="font-semibold text-slate-900 dark:text-white">{item.user}</span>
+                {' '}{item.action}{' '}
+                <span className="font-medium text-[#2563EB]">{item.target}</span>
+              </p>
+              <p className="text-xs text-slate-400 mt-1">{item.timestamp}</p>
+            </div>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 mt-2
+              group-hover:scale-125 transition-transform duration-200" />
+          </motion.div>
+        ))}
+      </div>
+      <button className="mt-5 w-full inline-flex items-center justify-center gap-1.5 text-sm font-medium
+        text-slate-400 hover:text-[#2563EB] transition-colors duration-200 py-2 rounded-xl
+        hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        View All Activity <ChevronRight className="w-4 h-4" />
+      </button>
+    </Section>
+  )
+}
+
+/* ──────────── SECTION 7 \u2014 QUICK ACTIONS ──────────── */
+function QuickActions() {
+  return (
+    <Section title="Quick Actions" subtitle="Common tasks and operations" className="mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {QUICK_ACTIONS.map((action, i) => (
+          <motion.button
+            key={action.label}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.06 * i, duration: 0.3 }}
+            whileHover={{ y: -3, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group relative flex flex-col items-start gap-3 p-5 rounded-[20px] text-left
+              bg-white/70 dark:bg-slate-900/60 backdrop-blur-2xl
+              border border-white/20 dark:border-slate-700/40 transition-all duration-300
+              hover:shadow-xl hover:shadow-[#2563EB]/5"
+            style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.08) inset' }}
+          >
+            <div className={`w-12 h-12 rounded-[14px] bg-gradient-to-br ${action.gradient}
+              flex items-center justify-center shadow-lg transition-transform duration-300
+              group-hover:scale-110 group-hover:rotate-[-4deg]`}>
+              <action.icon className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">{action.label}</p>
+              <p className="text-xs text-slate-400 mt-0.5">{action.desc}</p>
+            </div>
+            <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300
+              group-hover:text-[#2563EB] group-hover:translate-x-0.5 transition-all duration-200 opacity-0 group-hover:opacity-100" />
+          </motion.button>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
+/* ──────────── SECTION 8 \u2014 ANALYTICS SNAPSHOT ──────────── */
+function AnalyticsSnapshot() {
+  return (
+    <Section title="Analytics Snapshot" subtitle="Employee & team distribution">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+        <div>
+          <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#2563EB]" /> Department Distribution
+          </h4>
+          <div className="h-56 sm:h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={DEPARTMENT_DISTRIBUTION} cx="50%" cy="50%"
+                  innerRadius={55} outerRadius={85} paddingAngle={3}
+                  dataKey="value" animationBegin={200} animationDuration={1000}>
+                  {DEPARTMENT_DISTRIBUTION.map((entry) => (
+                    <Cell key={entry.name} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip contentStyle={{ background: 'rgba(255,255,255,0.95)', border: 'none', borderRadius: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)', padding: '8px 12px' }} labelStyle={{ fontWeight: 600 }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 mt-3">
+            {DEPARTMENT_DISTRIBUTION.map((d) => (
+              <span key={d.name} className="inline-flex items-center gap-1.5 text-xs text-slate-500">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
+                {d.name} <span className="font-medium text-slate-700 dark:text-slate-300">{d.value}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#7C3AED]" /> Team Size Breakdown
+          </h4>
+          <div className="h-56 sm:h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={TEAM_DISTRIBUTION} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.15)" vertical={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ background: 'rgba(255,255,255,0.95)', border: 'none', borderRadius: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)', padding: '8px 12px' }} />
+                <Bar dataKey="employees" radius={[6, 6, 0, 0]} animationBegin={400} animationDuration={1000}>
+                  {TEAM_DISTRIBUTION.map((_, idx) => (
+                    <Cell key={idx} fill={`hsl(${240 + idx * 25}, 70%, 55%)`} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+/* ──────────── MAIN PAGE ──────────── */
+export default function OrganizationProfilePage() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-10">
+      <HeroSection org={ORG_DATA} />
+      <KPIMetricsRow org={ORG_DATA} />
+      <OrganizationInfo org={ORG_DATA} />
+      <HealthScore org={ORG_DATA} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <SetupProgress />
+        <RecentActivity />
+      </div>
+      <QuickActions />
+      <AnalyticsSnapshot />
+    </div>
+  )
+}

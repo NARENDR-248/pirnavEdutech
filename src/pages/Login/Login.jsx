@@ -6,9 +6,9 @@ import { Eye, EyeOff, ArrowRight, Mail, Lock, CheckCircle } from "lucide-react";
 const AVATARS = ["AK", "SR", "MJ", "PL", "TD"];
 
 const TRUST_POINTS = [
-  "Industry-recognised certificates",
-  "500+ expert-led courses",
-  "Live mentorship sessions",
+  "Multi-branch & department management",
+  "Enterprise-grade security & compliance",
+  "500+ organizations trust HRMS",
 ];
 
 // ── Google SVG Icon ───────────────────────────────────────────────────────────
@@ -114,10 +114,9 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
     await new Promise((r) => setTimeout(r, 1200));
     setLoading(false);
-    navigate("/dashboard");
+    navigate('/organization/overview');
   };
 
   const set = (key) => (e) =>
@@ -187,22 +186,22 @@ export default function Login() {
                   <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
                 </svg>
               </div>
-              <span className="text-white font-semibold tracking-tight">TalentSphere</span>
+              <span className="text-white font-semibold tracking-tight">HRMS</span>
             </div>
 
             {/* Middle: hero copy */}
             <div className="flex-1 flex flex-col justify-center gap-5 mt-6 lg:mt-0">
               {/* Badge */}
               <span className="self-start text-[11px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full bg-white/15 text-white/80 backdrop-blur-sm border border-white/20">
-                Premium Learning Platform
+                Enterprise HRMS Platform
               </span>
 
               <h1 className="text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight">
-                Learn. Build. Grow.
+                Manage. Empower. Grow.
               </h1>
 
               <p className="text-white/70 text-sm lg:text-base leading-relaxed max-w-xs">
-                Join 20,000+ professionals accelerating their careers with expert-led courses and live mentorship.
+                Enterprise-grade HRMS platform for managing your workforce, branches, departments, and teams.
               </p>
 
               {/* Trust points */}
@@ -229,7 +228,7 @@ export default function Login() {
                 ))}
               </div>
               <p className="text-xs text-white/70">
-                <span className="text-white font-semibold">2,400+</span> joined this month
+                <span className="text-white font-semibold">10,000+</span> companies trust HRMS
               </p>
             </div>
           </div>
@@ -358,11 +357,10 @@ export default function Login() {
               </button>
 
               {/* Sign up link */}
-              <p className="text-center text-sm text-slate-500 pt-1">
-                Don't have an account?{" "}
-                <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                  Create one free
-                </Link>
+              <p className="text-center text-sm text-slate-500 pt-1">                  Don't have an account?{" "}
+                  <Link to="/organization/registration" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                    Create your organization
+                  </Link>
               </p>
             </form>
           </div>

@@ -1,15 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "../components/common/ScrollToTop";
 import EnquiryWidget from "../pages/EnquiryWidget";
 import Wishlist from "../pages/Wishlist";
 import Login from "../pages/Login/Login";
 import ForgotPassword from "../pages/Login/ForgotPassword";
+import OtpVerification from "../pages/Login/OtpVerification";
+import OtpChangePassword from "../pages/Login/OtpChangePassword";
+import ProfileChangePassword from "../pages/Login/ProfileChangePassword";
 import ResetPasswordPage from "../pages/Login/ResetPassword";
 import DashboardLayout from "../layouts/DashboardLayout";
 import OrganizationRegistrationPage from "../pages/organization/OrganizationRegistrationPage";
+import OrganizationOverviewPage from "../pages/organization/OrganizationOverviewPage";
 import OrganizationProfilePage from "../pages/organization/OrganizationProfilePage";
 import OrganizationSettingsPage from "../pages/organization/OrganizationSettingsPage";
+import BranchManagement from "../pages/organization/BranchManagement";
+import DepartmentManagement from "../pages/organization/DepartmentManagement";
+import TeamManagement from "../pages/organization/TeamManagement";
 
 // ✅ Lazy Imports
 const Home = lazy(() => import("../pages/Home"));
@@ -57,14 +64,31 @@ const AppRoutes = () => {
         }
       >
         <Routes>
-          <Route path="/" element={<DashboardLayout/>} />
-          <Route path="/organization/registration" element={<OrganizationRegistrationPage/>}/>
-          <Route path="/organization/profile" element={<OrganizationProfilePage/>}/>
-          <Route path="organization/settings" element={<OrganizationSettingsPage/>}/>
+          {/* Root Redirect */}
+          <Route path="/" element={<Navigate to="/organization/overview" replace />} />
 
-          <Route path="/forgot-password" element={<ForgotPassword/>}/>
+          {/* Auth Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/otp-verification" element={<OtpVerification />} />
+          <Route path="/change-password" element={<OtpChangePassword />} />
+          <Route path="/old-change-password" element={<ResetPasswordPage />} />
+
+          {/* Organization Routes (wrapped in DashboardLayout) */}
+          <Route path="/organization" element={<DashboardLayout />}>
+            <Route index element={<Navigate to="/organization/overview" replace />} />
+            <Route path="overview" element={<OrganizationOverviewPage />} />
+            <Route path="registration" element={<OrganizationRegistrationPage />} />
+            <Route path="profile" element={<OrganizationProfilePage />} />
+            <Route path="settings" element={<OrganizationSettingsPage />} />
+            <Route path="branches" element={<BranchManagement />} />
+            <Route path="departments" element={<DepartmentManagement />} />
+            <Route path="teams" element={<TeamManagement />} />
+            <Route path="change-password" element={<ProfileChangePassword />} />
+          </Route>
+
+          {/* Legacy/EdTech Routes */}
           <Route path="/courses" element={<Courses />} />
-           <Route path="/change-password" element={<ResetPasswordPage />} />
           <Route path="/course/:id" element={<CourseDetails />} />
           <Route path="/watch-course" element={<WatchCourse />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -74,8 +98,8 @@ const AppRoutes = () => {
           <Route path="/practice-tests" element={<PracticeTests />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/career" element={<Career />} />
-          <Route path="/python-course" element={<PythonCourseHero />} />
           <Route path="/about" element={<About />} />
+          <Route path="/python-course" element={<PythonCourseHero />} />
           <Route path="/courses/react-mastery-track" element={<ReactMain />} />
           <Route path="/mern-course" element={<MernMain />} />
           <Route path="/AI-course" element={<AiMain />} />

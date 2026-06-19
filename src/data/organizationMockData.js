@@ -61,6 +61,19 @@ export const CURRENCIES = [
   { value: 'AED', label: 'AED (د.إ)' },
 ]
 
+export const DATE_FORMATS = [
+  { value: 'MM/DD/YYYY', label: 'MM/DD/YYYY' },
+  { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY' },
+  { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' },
+  { value: 'DD.MM.YYYY', label: 'DD.MM.YYYY' },
+]
+
+export const THEMES = [
+  { value: 'system', label: 'System Default' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+]
+
 export const MOCK_COMPANY = {
   id: '1',
   name: 'Acme Corp',
