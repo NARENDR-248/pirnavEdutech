@@ -3,6 +3,13 @@ import { lazy, Suspense } from "react";
 import ScrollToTop from "../components/common/ScrollToTop";
 import EnquiryWidget from "../pages/EnquiryWidget";
 import Wishlist from "../pages/Wishlist";
+import Login from "../pages/Login/Login";
+import ForgotPassword from "../pages/Login/ForgotPassword";
+import ResetPasswordPage from "../pages/Login/ResetPassword";
+import DashboardLayout from "../layouts/DashboardLayout";
+import OrganizationRegistrationPage from "../pages/organization/OrganizationRegistrationPage";
+import OrganizationProfilePage from "../pages/organization/OrganizationProfilePage";
+import OrganizationSettingsPage from "../pages/organization/OrganizationSettingsPage";
 
 // ✅ Lazy Imports
 const Home = lazy(() => import("../pages/Home"));
@@ -50,8 +57,14 @@ const AppRoutes = () => {
         }
       >
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<DashboardLayout/>} />
+          <Route path="/organization/registration" element={<OrganizationRegistrationPage/>}/>
+          <Route path="/organization/profile" element={<OrganizationProfilePage/>}/>
+          <Route path="organization/settings" element={<OrganizationSettingsPage/>}/>
+
+          <Route path="/forgot-password" element={<ForgotPassword/>}/>
           <Route path="/courses" element={<Courses />} />
+           <Route path="/change-password" element={<ResetPasswordPage />} />
           <Route path="/course/:id" element={<CourseDetails />} />
           <Route path="/watch-course" element={<WatchCourse />} />
           <Route path="/dashboard" element={<Dashboard />} />
