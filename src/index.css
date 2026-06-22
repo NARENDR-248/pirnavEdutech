@@ -1,0 +1,315 @@
+@import "tailwindcss";
+
+/* =========================
+   GLOBAL RESET
+========================= */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================
+   DESIGN SYSTEM TOKENS
+   Semantic theme tokens — light by default (:root), dark overrides in .dark
+========================= */
+
+/* ── Light theme (default) ── */
+:root {
+  /* Surface */
+  --color-base: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f1f5f9;
+  --color-surface-card: rgba(255, 255, 255, 0.8);
+  --color-glass-edge: rgba(0, 0, 0, 0.08);
+  --color-glass-edge-hover: rgba(0, 0, 0, 0.14);
+  --color-glass-fill: rgba(0, 0, 0, 0.03);
+
+  /* Text */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+  --color-text-inverse: #ffffff;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-hover: #cbd5e1;
+  --color-border-subtle: #f1f5f9;
+
+  /* Primary gradient */
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.08) 100%);
+  --gradient-hero-light: linear-gradient(160deg, #dbeafe 0%, #e9d5ff 40%, #fce7f3 70%, #ffffff 100%);
+  --gradient-hero-dark: linear-gradient(160deg, #1e3a8a 0%, #5b21b6 45%, #9d174d 100%);
+
+  /* Shadows */
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --shadow-glow-blue: 0 4px 24px rgba(59, 130, 246, 0.1);
+  --shadow-glow-purple: 0 4px 24px rgba(139, 92, 246, 0.1);
+
+  /* Misc */
+  --scrollbar-thumb: rgba(0, 0, 0, 0.12);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Dark theme ── */
+.dark {
+  --color-base: #020617;
+  --color-surface: #0b1220;
+  --color-surface-elevated: #111827;
+  --color-surface-card: rgba(17, 24, 39, 0.6);
+  --color-glass-edge: rgba(255, 255, 255, 0.08);
+  --color-glass-edge-hover: rgba(255, 255, 255, 0.14);
+  --color-glass-fill: rgba(255, 255, 255, 0.04);
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-text-inverse: #0f172a;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  --gradient-subtle: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, rgba(236, 72, 153, 0.1) 100%);
+  --gradient-hero: linear-gradient(160deg, #1e3a8a 0%, #5b21b6 45%, #9d174d 100%);
+
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-glow-blue: 0 4px 24px rgba(59, 130, 246, 0.15);
+  --shadow-glow-purple: 0 4px 24px rgba(139, 92, 246, 0.15);
+
+  --scrollbar-thumb: rgba(255, 255, 255, 0.08);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.14);
+}
+
+/* ── Spacing + Radii (shared) ── */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+}
+
+/* ── Scrollbar styling (theme-aware via CSS variable) ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.08));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover, rgba(255, 255, 255, 0.14));
+}
+
+/* =========================
+   SEMANTIC UTILITY CLASSES
+   Use these instead of repeating bg-white/dark:bg-slate-900 pairs everywhere
+   Maps 1:1 to the CSS variables defined in :root / .dark above
+========================= */
+
+/* ── Surfaces ── */
+.bg-base         { background-color: var(--color-base); }
+.bg-surface      { background-color: var(--color-surface); }
+.bg-surface-elev { background-color: var(--color-surface-elevated); }
+.bg-glass        { background-color: var(--color-glass-fill); backdrop-filter: blur(16px); }
+
+/* ── Text ── */
+.text-primary    { color: var(--color-text-primary); }
+.text-secondary  { color: var(--color-text-secondary); }
+.text-muted      { color: var(--color-text-muted); }
+
+/* ── Borders ── */
+.border-default  { border-color: var(--color-border); }
+.border-hover    { border-color: var(--color-border-hover); }
+.border-subtle   { border-color: var(--color-border-subtle); }
+
+/* ── Shadows (via box-shadow) ── */
+.shadow-soft     { box-shadow: var(--shadow-soft); }
+.shadow-card     { box-shadow: var(--shadow-card); }
+.shadow-elevated { box-shadow: var(--shadow-elevated); }
+.shadow-glow-blue   { box-shadow: var(--shadow-glow-blue); }
+.shadow-glow-purple { box-shadow: var(--shadow-glow-purple); }
+
+/* ── Glass card (common pattern) ── */
+.glass-card {
+  background: var(--color-surface-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-glass-edge);
+}
+.glass-card:hover {
+  border-color: var(--color-glass-edge-hover);
+}
+
+/* ── Gradient hero — picks the right gradient per theme ── */
+.gradient-hero {
+  background: var(--gradient-hero-dark, linear-gradient(160deg, #1e3a8a 0%, #5b21b6 45%, #9d174d 100%));
+}
+:root .gradient-hero {
+  background: var(--gradient-hero-light, linear-gradient(160deg, #dbeafe 0%, #e9d5ff 40%, #fce7f3 70%, #ffffff 100%));
+}
+.dark .gradient-hero {
+  background: var(--gradient-hero-dark, linear-gradient(160deg, #1e3a8a 0%, #5b21b6 45%, #9d174d 100%));
+}
+
+/* =========================
+   SCROLLBAR HIDE
+========================= */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* =========================
+   SWIPER PAGINATION
+========================= */
+.swiper-pagination-bullet {
+  background: #94a3b8 !important;
+  opacity: 1 !important;
+  width: 10px;
+  height: 10px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2563eb !important;
+  width: 22px !important;
+  border-radius: 20px !important;
+}
+
+/* Oracle Swiper Pagination */
+.oracleSwiper .swiper-pagination {
+  margin-top: 30px;
+}
+
+.oracleSwiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+}
+
+.oracleSwiper .swiper-pagination-bullet-active {
+  width: 32px;
+  border-radius: 999px;
+  background: #22d3ee;
+}
+
+/* =========================
+   SWIPER NAVIGATION BUTTONS
+========================= */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 56px !important;
+  height: 56px !important;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  color: #2563eb !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+/* Generic scroll (marquee base) */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+/* Success scroll */
+@keyframes success-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-success-scroll {
+  animation: success-scroll 30s linear infinite;
+}
+
+/* Spin */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Floating logo */
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.logo-float {
+  animation: floatLogo 3s ease-in-out infinite;
+}
+
+/* =========================
+   MARQUEE
+========================= */
+.marquee {
+  animation: scroll 60s linear infinite;
+}
+
+.marquee:hover {
+  animation-duration: 60s;
+}
