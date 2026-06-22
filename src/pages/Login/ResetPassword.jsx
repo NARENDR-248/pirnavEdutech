@@ -7,13 +7,17 @@ import {
   EyeOff,
   Lock,
   Info,
+  Moon,
+  Sun,
 } from "lucide-react";
+import { useThemeContext } from "../../context/ThemeContext";
 
 const OTP_LEN = 6;
 const RESEND_DELAY = 60;
 
 export default function ResetPasswordPage() {
   const navigate = useNavigate();
+  const { isDark, toggle: toggleTheme } = useThemeContext();
 
   const [otp, setOtp] = useState(Array(OTP_LEN).fill(""));
   const refs = useRef([]);
@@ -143,15 +147,34 @@ try {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden">
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+    <div className={`min-h-screen flex items-center justify-center px-4 relative overflow-hidden transition-colors duration-300 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
+      {isDark && <>
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      </>}
+
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className={`absolute top-5 right-5 z-50 p-2.5 rounded-xl border transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+          isDark
+            ? "bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.12]"
+            : "bg-white border-slate-200 hover:bg-slate-100 hover:border-slate-300 shadow-sm"
+        }`}
+        aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      >
+        {isDark ? (
+          <Sun className="w-4 h-4 text-amber-400" />
+        ) : (
+          <Moon className="w-4 h-4 text-slate-500" />
+        )}
+      </button>
 
       <div className="w-full max-w-md">
-        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl">
+        <div className={`backdrop-blur-xl border rounded-3xl p-8 shadow-2xl transition-colors duration-300 ${isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'}`}>
           <button
             onClick={() => navigate("/forgot-password")}
-            className="flex items-center gap-2 text-slate-400 hover:text-white transition mb-6"
+            className={`flex items-center gap-2 transition mb-6 ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-900'}`}
           >
             <ArrowLeft size={16} />
             Back

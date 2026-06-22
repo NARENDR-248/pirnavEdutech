@@ -1,29 +1,27 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import ScrollToTop from "../components/common/ScrollToTop";
-import EnquiryWidget from "../pages/EnquiryWidget";
-import Wishlist from "../pages/Wishlist";
-import Login from "../pages/Login/Login";
-import ForgotPassword from "../pages/Login/ForgotPassword";
-import OtpVerification from "../pages/Login/OtpVerification";
-import OtpChangePassword from "../pages/Login/OtpChangePassword";
-import ProfileChangePassword from "../pages/Login/ProfileChangePassword";
-import ResetPasswordPage from "../pages/Login/ResetPassword";
-import DashboardLayout from "../layouts/DashboardLayout";
-import OrganizationRegistrationPage from "../pages/organization/OrganizationRegistrationPage";
-import OrganizationOverviewPage from "../pages/organization/OrganizationOverviewPage";
-import OrganizationProfilePage from "../pages/organization/OrganizationProfilePage";
-import OrganizationSettingsPage from "../pages/organization/OrganizationSettingsPage";
-import BranchManagement from "../pages/organization/BranchManagement";
-import DepartmentManagement from "../pages/organization/DepartmentManagement";
-import TeamManagement from "../pages/organization/TeamManagement";
 
-// ✅ Lazy Imports
+import ScrollToTop from "../components/common/ScrollToTop";
+
+// ── Layout ──────────────────────────────────────────────────
+import DashboardLayout from "../layouts/DashboardLayout";
+
+// ── Route Guards ────────────────────────────────────────────
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+import RoleBasedRoute from "../components/auth/RoleBasedRoute";
+
+// ── Route Constants ────────────────────────────────────────
+import { ROUTES } from "./routeConstants";
+
+// ================================================================
+// LAZY-LOADED PAGE COMPONENTS
+// ================================================================
+
+// ── Public Pages ─────────────────────────────────────────────
 const Home = lazy(() => import("../pages/Home"));
 const Courses = lazy(() => import("../pages/Courses"));
 const CourseDetails = lazy(() => import("../pages/CourseDetails"));
 const WatchCourse = lazy(() => import("../pages/WatchCourse"));
-const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Mentors = lazy(() => import("../pages/Mentors"));
 const ResumeBuilder = lazy(() => import("../pages/ResumeBuilder"));
 const InterviewGuides = lazy(() => import("../pages/InterviewGuides"));
@@ -34,9 +32,10 @@ const About = lazy(() => import("../pages/About"));
 const Enroll = lazy(() => import("../pages/Enroll"));
 const Admissions = lazy(() => import("../pages/Admissions"));
 const CheckoutPage = lazy(() => import("../pages/CheckoutPage"));
+const Wishlist = lazy(() => import("../pages/Wishlist"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
-// Course Components
+// ── Course Detail Pages ─────────────────────────────────────
 const PythonCourseHero = lazy(() =>
   import("../components/courses/python/PythonCourseHero")
 );
@@ -50,68 +49,587 @@ const AiMain = lazy(() =>
   import("../components/courses/Ai/AiMain")
 );
 
+// ── Auth Pages ──────────────────────────────────────────────
+const Login = lazy(() => import("../pages/Login/Login"));
+const ForgotPassword = lazy(() => import("../pages/Login/ForgotPassword"));
+const OtpVerification = lazy(() => import("../pages/Login/OtpVerification"));
+const OtpChangePassword = lazy(() => import("../pages/Login/OtpChangePassword"));
+const ResetPassword = lazy(() => import("../pages/Login/ResetPassword"));
+const ProfileChangePassword = lazy(() =>
+  import("../pages/Login/ProfileChangePassword")
+);
+
+// ── Dashboard Pages (statics become lazy) ───────────────────
+const SuperAdminDashboard = lazy(() =>
+  import("../pages/super-admin/SuperAdminDashboard")
+);
+const OrgAdminDashboard = lazy(() =>
+  import("../pages/organization/OrgAdminDashboard")
+);
+const EmployeeDashboard = lazy(() =>
+  import("../pages/employee/EmployeeDashboard")
+);
+const OrganizationRegistrationPage = lazy(() =>
+  import("../pages/organization/OrganizationRegistrationPage")
+);
+const OrganizationOverviewPage = lazy(() =>
+  import("../pages/organization/OrganizationOverviewPage")
+);
+const OrganizationProfilePage = lazy(() =>
+  import("../pages/organization/OrganizationProfilePage")
+);
+const OrganizationSettingsPage = lazy(() =>
+  import("../pages/organization/OrganizationSettingsPage")
+);
+const DepartmentManagement = lazy(() =>
+  import("../pages/organization/DepartmentManagement")
+);
+const TeamManagement = lazy(() =>
+  import("../pages/organization/TeamManagement")
+);
+const EmployeeManagement = lazy(() =>
+  import("../pages/organization/EmployeeManagement")
+);
+
+// ── Placeholder for future pages ────────────────────────────
+const PagePlaceholder = lazy(() => import("../components/common/PagePlaceholder"));
+
+// ================================================================
+// SUSPENSE FALLBACK
+// ================================================================
+const PageLoader = () => (
+  <div className="h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#0F172A]">
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
+      <span className="text-sm font-medium text-slate-400">Loading...</span>
+    </div>
+  </div>
+);
+
+// ================================================================
+// REUSABLE SUSPENSE WRAPPER
+// ================================================================
+const SuspenseWrapper = ({ children }) => (
+  <Suspense fallback={<PageLoader />}>{children}</Suspense>
+);
+
+// ================================================================
+// APP ROUTES
+// ================================================================
+
 const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
 
-      {/* ✅ Suspense Wrapper */}
-      <Suspense
-        fallback={
-          <div className="h-screen flex items-center justify-center text-lg font-semibold">
-            Loading...
-          </div>
-        }
-      >
-        <Routes>
-          {/* Root Redirect */}
-          <Route path="/" element={<Navigate to="/organization/overview" replace />} />
+      <Routes>
+        {/* ─────────────────────────────────────────────────────── */}
+        {/* PUBLIC ROUTES                                          */}
+        {/* ─────────────────────────────────────────────────────── */}
 
-          {/* Auth Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/otp-verification" element={<OtpVerification />} />
-          <Route path="/change-password" element={<OtpChangePassword />} />
-          <Route path="/old-change-password" element={<ResetPasswordPage />} />
+        {/* Root → Home */}
+        <Route
+          path="/"
+          element={
+            <SuspenseWrapper>
+              <Home />
+            </SuspenseWrapper>
+          }
+        />
 
-          {/* Organization Routes (wrapped in DashboardLayout) */}
-          <Route path="/organization" element={<DashboardLayout />}>
-            <Route index element={<Navigate to="/organization/overview" replace />} />
-            <Route path="overview" element={<OrganizationOverviewPage />} />
-            <Route path="registration" element={<OrganizationRegistrationPage />} />
-            <Route path="profile" element={<OrganizationProfilePage />} />
-            <Route path="settings" element={<OrganizationSettingsPage />} />
-            <Route path="branches" element={<BranchManagement />} />
-            <Route path="departments" element={<DepartmentManagement />} />
-            <Route path="teams" element={<TeamManagement />} />
-            <Route path="change-password" element={<ProfileChangePassword />} />
-          </Route>
+        {/* Courses & Learning */}
+        <Route
+          path={ROUTES.PUBLIC.COURSES}
+          element={
+            <SuspenseWrapper>
+              <Courses />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.COURSE_DETAILS}
+          element={
+            <SuspenseWrapper>
+              <CourseDetails />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.WATCH_COURSE}
+          element={
+            <SuspenseWrapper>
+              <WatchCourse />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.MENTORS}
+          element={
+            <SuspenseWrapper>
+              <Mentors />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.RESUME_BUILDER}
+          element={
+            <SuspenseWrapper>
+              <ResumeBuilder />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.INTERVIEW_GUIDES}
+          element={
+            <SuspenseWrapper>
+              <InterviewGuides />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.PRACTICE_TESTS}
+          element={
+            <SuspenseWrapper>
+              <PracticeTests />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.BLOG}
+          element={
+            <SuspenseWrapper>
+              <Blog />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.CAREER}
+          element={
+            <SuspenseWrapper>
+              <Career />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.ABOUT}
+          element={
+            <SuspenseWrapper>
+              <About />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.ENROLL}
+          element={
+            <SuspenseWrapper>
+              <Enroll />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.ADMISSIONS}
+          element={
+            <SuspenseWrapper>
+              <Admissions />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.CHECKOUT}
+          element={
+            <SuspenseWrapper>
+              <CheckoutPage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.WISHLIST}
+          element={
+            <SuspenseWrapper>
+              <Wishlist />
+            </SuspenseWrapper>
+          }
+        />
 
-          {/* Legacy/EdTech Routes */}
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/course/:id" element={<CourseDetails />} />
-          <Route path="/watch-course" element={<WatchCourse />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/mentors" element={<Mentors />} />
-          <Route path="/resume-builder" element={<ResumeBuilder />} />
-          <Route path="/interview-guides" element={<InterviewGuides />} />
-          <Route path="/practice-tests" element={<PracticeTests />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/career" element={<Career />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/python-course" element={<PythonCourseHero />} />
-          <Route path="/courses/react-mastery-track" element={<ReactMain />} />
-          <Route path="/mern-course" element={<MernMain />} />
-          <Route path="/AI-course" element={<AiMain />} />
-          <Route path="/enroll" element={<Enroll />} />
-          <Route path="/admissions" element={<Admissions />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-      <EnquiryWidget />
-    </BrowserRouter>
+        {/* Course detail sub-pages */}
+        <Route
+          path={ROUTES.PUBLIC.PYTHON_COURSE}
+          element={
+            <SuspenseWrapper>
+              <PythonCourseHero />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.REACT_COURSE}
+          element={
+            <SuspenseWrapper>
+              <ReactMain />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.MERN_COURSE}
+          element={
+            <SuspenseWrapper>
+              <MernMain />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.PUBLIC.AI_COURSE}
+          element={
+            <SuspenseWrapper>
+              <AiMain />
+            </SuspenseWrapper>
+          }
+        />
+
+        {/* ─────────────────────────────────────────────────────── */}
+        {/* AUTHENTICATION ROUTES (public, no layout)              */}
+        {/* ─────────────────────────────────────────────────────── */}
+        <Route
+          path={ROUTES.AUTH.LOGIN}
+          element={
+            <SuspenseWrapper>
+              <Login />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.AUTH.FORGOT_PASSWORD}
+          element={
+            <SuspenseWrapper>
+              <ForgotPassword />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.AUTH.OTP_VERIFICATION}
+          element={
+            <SuspenseWrapper>
+              <OtpVerification />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.AUTH.CHANGE_PASSWORD}
+          element={
+            <SuspenseWrapper>
+              <OtpChangePassword />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.AUTH.RESET_PASSWORD}
+          element={
+            <SuspenseWrapper>
+              <ResetPassword />
+            </SuspenseWrapper>
+          }
+        />
+
+        {/* ─────────────────────────────────────────────────────── */}
+        {/* SUPER ADMIN MODULE (protected + role-gated)            */}
+        {/* ─────────────────────────────────────────────────────── */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["super-admin"]}>
+                <DashboardLayout />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            path={ROUTES.SUPER_ADMIN.ROOT}
+            element={
+              <Navigate to={ROUTES.SUPER_ADMIN.DASHBOARD} replace />
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.DASHBOARD}
+            element={
+              <SuspenseWrapper>
+                <SuperAdminDashboard />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.ORGANIZATIONS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Organizations" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.EMPLOYEES}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Employees" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.SUBSCRIPTIONS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Subscriptions" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.ANALYTICS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Analytics" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.REPORTS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Reports" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.SUPER_ADMIN.SETTINGS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Settings" />
+              </SuspenseWrapper>
+            }
+          />
+        </Route>
+
+        {/* ─────────────────────────────────────────────────────── */}
+        {/* ORGANIZATION MODULE (protected + role-gated)           */}
+        {/* ─────────────────────────────────────────────────────── */}
+
+        {/* Registration — standalone public route (no dashboard layout / auth) */}
+        <Route
+          path={ROUTES.ORG_ADMIN.REGISTRATION}
+          element={
+            <SuspenseWrapper>
+              <OrganizationRegistrationPage />
+            </SuspenseWrapper>
+          }
+        />
+
+        <Route
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["org-admin"]}>
+                <DashboardLayout />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        >
+          {/* Org Admin Root → Dashboard */}
+          <Route
+            path={ROUTES.ORG_ADMIN.ROOT}
+            element={
+              <Navigate to={ROUTES.ORG_ADMIN.DASHBOARD} replace />
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.DASHBOARD}
+            element={
+              <SuspenseWrapper>
+                <OrgAdminDashboard />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.OVERVIEW}
+            element={
+              <SuspenseWrapper>
+                <OrganizationOverviewPage />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.PROFILE}
+            element={
+              <SuspenseWrapper>
+                <OrganizationProfilePage />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.EMPLOYEES}
+            element={
+              <SuspenseWrapper>
+                <EmployeeManagement />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.DEPARTMENTS}
+            element={
+              <SuspenseWrapper>
+                <DepartmentManagement />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.TEAMS}
+            element={
+              <SuspenseWrapper>
+                <TeamManagement />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.SKILLS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Skills" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.GOALS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Goals" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.PERFORMANCE}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Performance" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.REPORTS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Reports" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.SETTINGS}
+            element={
+              <SuspenseWrapper>
+                <OrganizationSettingsPage />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.ORG_ADMIN.CHANGE_PASSWORD}
+            element={
+              <SuspenseWrapper>
+                <ProfileChangePassword />
+              </SuspenseWrapper>
+            }
+          />
+        </Route>
+
+        {/* ─────────────────────────────────────────────────────── */}
+        {/* EMPLOYEE MODULE (protected + role-gated)               */}
+        {/* ─────────────────────────────────────────────────────── */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <RoleBasedRoute allowedRoles={["employee"]}>
+                <DashboardLayout />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            path={ROUTES.EMPLOYEE.ROOT}
+            element={
+              <Navigate to={ROUTES.EMPLOYEE.DASHBOARD} replace />
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.DASHBOARD}
+            element={
+              <SuspenseWrapper>
+                <EmployeeDashboard />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.SKILLS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="My Skills" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.GOALS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="My Goals" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.CAREER}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Career Path" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.LEARNING}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Learning" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.REVIEWS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Reviews" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.PROFILE}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Profile" />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.EMPLOYEE.SETTINGS}
+            element={
+              <SuspenseWrapper>
+                <PagePlaceholder title="Settings" />
+              </SuspenseWrapper>
+            }
+          />
+        </Route>
+
+        {/* ─────────────────────────────────────────────────────── */}
+        {/* 404 — CATCH-ALL                                         */}
+        {/* ─────────────────────────────────────────────────────── */}
+        <Route
+          path="*"
+          element={
+            <SuspenseWrapper>
+              <NotFound />
+            </SuspenseWrapper>
+          }
+        />
+      </Routes>
+    </>
   );
 };
 

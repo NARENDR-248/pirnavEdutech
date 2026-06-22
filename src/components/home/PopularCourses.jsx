@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 
 import "swiper/css";
+import { useThemeContext } from "../../context/ThemeContext";
 
 const courses = [
   { title: "React", path: "/react", icon: <FaReact />, color: "from-cyan-400 to-blue-600" },
@@ -27,9 +28,10 @@ const courses = [
 
 export default function NetflixCarousel() {
   const navigate = useNavigate();
+  const { isDark } = useThemeContext();
 
   return (
-    <section className="bg-[#020b14] py-16 text-white overflow-hidden relative">
+    <section className={`py-16 overflow-hidden relative transition-colors duration-300 ${isDark ? 'bg-[#020b14] text-white' : 'bg-slate-50 text-slate-900'}`}>
 
       {/* Glow Background */}
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 blur-[120px]" />

@@ -40,6 +40,7 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
+import { useThemeContext } from "../context/ThemeContext";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const FEATURES = [
@@ -96,23 +97,20 @@ function OthersCell({ others, othersNote }) {
 
 // ─── WhyChooseUs ──────────────────────────────────────────────────────────────
 export default function WhyChooseUs() {
+  const { isDark } = useThemeContext();
   return (
-    /**
-     * FIX 1 — No min-h-screen here. `py-16 md:py-20` gives balanced, consistent
-     * section padding that matches every other section on the page.
-     * `overflow-hidden` keeps the absolute glow orbs contained to this section.
-     */
     <section
   id="why-us"
-  className="relative overflow-hidden bg-[#020617] pt-8 pb-12 text-white md:pt-10 md:pb-16"
+  className={`relative overflow-hidden pt-8 pb-12 md:pt-10 md:pb-16 transition-colors duration-300 ${isDark ? 'bg-[#020617] text-white' : 'bg-slate-50 text-slate-900'}`}
 >
 
       {/* ── Background atmosphere ─────────────────────────────────────── */}
-      {/* FIX 2 — pointer-events-none so glows never intercept clicks */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-[120px]" />
-        <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:50px_50px]" />
+      {/* FIX 2 — pointer-events-none so glows never intercept clicks */}        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        {isDark && <>
+          <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-[120px]" />
+          <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
+        </>}
+        <div className={`absolute inset-0 bg-[size:50px_50px] ${isDark ? 'bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)]' : 'bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)]'}`} />
       </div>
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">

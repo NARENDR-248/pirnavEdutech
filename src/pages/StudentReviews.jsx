@@ -23,6 +23,7 @@ import React from "react";
 import { FaLinkedinIn, FaStar, FaQuoteRight } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import { useThemeContext } from "../context/ThemeContext";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const TESTIMONIALS_DATA = [
@@ -64,17 +65,20 @@ const TESTIMONIALS_DATA = [
  * FIX: `overflow-hidden` added alongside `line-clamp-4` (required pair).
  * FIX: Missing opening <a> tag restored.
  */
-function ReviewCard({ item }) {
+function ReviewCard({ item, isDark }) {
   return (
     <article
-      className="
+      className={`
         group relative flex flex-col h-full overflow-hidden
-        rounded-2xl border border-white/10 bg-white/[0.04]
-        p-5 backdrop-blur-2xl
+        rounded-2xl p-5 backdrop-blur-2xl
         transition-all duration-300
         hover:-translate-y-1 hover:border-cyan-400/40
         hover:shadow-[0_16px_48px_rgba(6,182,212,0.12)]
-      "
+        ${isDark
+          ? 'border border-white/10 bg-white/[0.04]'
+          : 'border border-slate-200 bg-white shadow-sm'
+        }
+      `}
     >
       {/* Hover glow — decorative */}
       <div
@@ -181,19 +185,29 @@ function ReviewCard({ item }) {
  *   `gap-4 lg:gap-5` → tighter gap prevents horizontal overflow on 1024–1280px.
  */
 export default function StudentReviews() {
+  const { isDark } = useThemeContext();
   return (
     <section
       id="reviews"
-      className="relative w-full overflow-hidden bg-[#020b14] py-8 md:py-12 text-slate-100 font-sans"
+      className={`relative w-full overflow-hidden py-8 md:py-12 font-sans transition-colors duration-300 ${isDark ? 'bg-[#020b14] text-slate-100' : 'bg-slate-50 text-slate-800'}`}
     >
       {/* ── Background atmosphere ──────────────────────────────────────── */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Radial glows */}
-        <div className="absolute left-1/2 top-0 h-[350px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/[0.07] blur-[160px]" />
-        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-blue-500/[0.07] blur-[160px]" />
-        <div className="absolute left-0 top-1/2 h-[350px] w-[350px] rounded-full bg-cyan-400/[0.05] blur-[130px]" />
+        {isDark && <>
+          <div className="absolute left-1/2 top-0 h-[350px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/[0.07] blur-[160px]" />
+          <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-blue-500/[0.07] blur-[160px]" />
+          <div className="absolute left-0 top-1/2 h-[350px] w-[350px] rounded-full bg-cyan-400/[0.05] blur-[130px]" />
+        </>}
         {/* Grid overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:60px_60px]" />
+        <div
+          className={`absolute inset-0 transition-colors duration-300`}
+          style={{
+            backgroundSize: '60px 60px',
+            backgroundImage: isDark
+              ? 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)'
+              : 'linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px)'
+          }}
+        />
       </div>
 
       {/* ── Floating particles (decorative) ───────────────────────────── */}
@@ -271,7 +285,7 @@ export default function StudentReviews() {
               key={`${item.id}-${index}`}
               className="w-[350px] flex-shrink-0"
             >
-              <ReviewCard item={item} />
+              <ReviewCard item={item} isDark={isDark} />
             </div>
           ))}
         </motion.div>

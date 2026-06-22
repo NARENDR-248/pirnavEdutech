@@ -6,6 +6,7 @@ import {
   FaArrowRight,
   FaFire,
 } from "react-icons/fa";
+import { useThemeContext } from "../context/ThemeContext";
 
 const blogs = [
   {
@@ -47,6 +48,7 @@ const blogs = [
 ];
 
 function Blog() {
+  const { isDark } = useThemeContext();
   return (
     <>
       <Navbar />
@@ -210,7 +212,7 @@ function Blog() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-24 bg-slate-950 text-white">
+      <section className={`py-24 transition-colors duration-300 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'}`}>
 
         <div className="max-w-4xl mx-auto px-5 text-center">
 

@@ -5,6 +5,7 @@ import {
   FiChevronRight, FiZap, FiShield, FiTrendingUp, FiUsers,
   FiGlobe, FiTerminal,
 } from 'react-icons/fi';
+import { useThemeContext } from '../context/ThemeContext';
 
 // ─── Data (unchanged) ────────────────────────────────────────────────────────
 
@@ -112,22 +113,22 @@ function CourseCard({ course }) {
 export default function SkillTracksSection() {
   const [activeTab, setActiveTab] = useState('java');
   const activeCourses = COURSE_DATA[activeTab] ?? [];
+  const { isDark } = useThemeContext();
 
   return (
-    // FIX 1: min-h-screen + flex flex-col justify-center — fills viewport fully
-    <section className="
-  relative w-full
-  bg-[#020b14] text-white overflow-hidden font-sans
-">
+    <section className={`
+  relative w-full overflow-hidden font-sans transition-colors duration-300
+  ${isDark ? 'bg-[#020b14] text-white' : 'bg-slate-50 text-slate-900'}
+`}>
 
       {/* Ambient glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-cyan-500/10 blur-[110px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/3 w-[320px] h-[320px] rounded-full bg-blue-600/10 blur-[90px] pointer-events-none" />
-
-      {/* Star particles */}
-      <div className="absolute top-20 left-[15%] w-1 h-1 bg-white/40 rounded-full animate-pulse" />
-      <div className="absolute bottom-40 right-[12%] w-1.5 h-1.5 bg-cyan-400/30 rounded-full animate-ping [animation-duration:3s]" />
-      <div className="absolute top-1/2 right-[8%] w-1 h-1 bg-blue-400/40 rounded-full animate-pulse [animation-duration:2s]" />
+      {isDark && <>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-cyan-500/10 blur-[110px] pointer-events-none" />
+        <div className="absolute bottom-1/4 left-1/3 w-[320px] h-[320px] rounded-full bg-blue-600/10 blur-[90px] pointer-events-none" />
+        <div className="absolute top-20 left-[15%] w-1 h-1 bg-white/40 rounded-full animate-pulse" />
+        <div className="absolute bottom-40 right-[12%] w-1.5 h-1.5 bg-cyan-400/30 rounded-full animate-ping [animation-duration:3s]" />
+        <div className="absolute top-1/2 right-[8%] w-1 h-1 bg-blue-400/40 rounded-full animate-pulse [animation-duration:2s]" />
+      </>}
 
       {/* FIX 2: consistent padding — py-10 gives breathing room without overflow */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 flex flex-col items-center">

@@ -10,6 +10,10 @@ import {
   FaQuestionCircle,
   FaChartLine,
 } from "react-icons/fa";
+<<<<<<< HEAD
+=======
+import { useThemeContext } from "../context/ThemeContext";
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
 
 const tests = [
   {
@@ -74,6 +78,10 @@ function PracticeTests() {
 
   const [category, setCategory] =
     useState("All");
+<<<<<<< HEAD
+=======
+  const { isDark } = useThemeContext();
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
 
   const categories = [
     "All",
@@ -299,7 +307,11 @@ function PracticeTests() {
       </section>
 
       {/* CTA */}
+<<<<<<< HEAD
       <section className="py-24 bg-slate-950 text-white">
+=======
+      <section className={`py-24 transition-colors duration-300 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'}`}>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
 
         <div className="max-w-4xl mx-auto px-5 text-center">
 

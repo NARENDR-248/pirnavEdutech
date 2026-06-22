@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Bot } from "lucide-react";
+import { useThemeContext } from "../context/ThemeContext";
 
 const faqDB = [
   {
@@ -26,13 +27,16 @@ const faqDB = [
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(null);
+  const { isDark } = useThemeContext();
 
   return (
-    <section className="relative bg-[#020b14] text-white px-4 pt-6 pb-12 overflow-hidden">
+    <section className={`relative px-4 pt-6 pb-12 overflow-hidden transition-colors duration-300 ${isDark ? 'bg-[#020b14] text-white' : 'bg-slate-50 text-slate-900'}`}>
 
       {/* Glow Background */}
-      <div className="absolute w-[400px] h-[400px] bg-cyan-500/10 blur-[140px] top-0 left-0" />
-      <div className="absolute w-[400px] h-[400px] bg-purple-500/10 blur-[140px] bottom-0 right-0" />
+      {isDark && <>
+        <div className="absolute w-[400px] h-[400px] bg-cyan-500/10 blur-[140px] top-0 left-0" />
+        <div className="absolute w-[400px] h-[400px] bg-purple-500/10 blur-[140px] bottom-0 right-0" />
+      </>}
 
       <div className="relative max-w-3xl mx-auto">
 

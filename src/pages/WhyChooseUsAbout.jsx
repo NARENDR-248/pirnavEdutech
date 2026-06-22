@@ -3,6 +3,7 @@ import {
   XCircle,
   AlertTriangle,
 } from "lucide-react";
+import { useThemeContext } from "../context/ThemeContext";
 
 const features = [
   {
@@ -40,8 +41,14 @@ const features = [
 ];
 
 export default function WhyChooseUs() {
+<<<<<<< HEAD
   return (
     <section className="py-24 bg-slate-950 text-white relative overflow-hidden">
+=======
+  const { isDark } = useThemeContext();
+  return (
+    <section className={`py-24 relative overflow-hidden transition-colors duration-300 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'}`}>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
 
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-cyan-900/20" />
 

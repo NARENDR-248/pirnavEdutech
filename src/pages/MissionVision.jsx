@@ -1,6 +1,9 @@
+import { useThemeContext } from "../context/ThemeContext";
+
 function MissionVision() {
+  const { isDark } = useThemeContext();
   return (
-    <section className="bg-slate-950 py-24">
+    <section className={`py-24 transition-colors duration-300 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
 
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center px-6">
 

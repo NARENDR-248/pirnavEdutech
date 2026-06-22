@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+import { useThemeContext } from "../context/ThemeContext";
 
 import CheckoutHeader from "../components/checkout/CheckoutHeader";
 import StudentDetailsForm from "../components/checkout/StudentDetailsForm";
@@ -30,6 +31,7 @@ import { COURSE_DATA, PRICE_DATA } from "../data/morckData";
  * Cashfree SDKs.
  */
 const CheckoutPage = () => {
+  const { isDark } = useThemeContext();
   const {
     register,
     handleSubmit,
@@ -145,7 +147,7 @@ const CheckoutPage = () => {
   const consentGiven = Boolean(agreeTerms) && Boolean(agreePrivacy);
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white">
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? "bg-[#030712] text-white" : "bg-slate-50 text-slate-900"}`}>
       {/* Ambient gradient background accents */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]" />
@@ -195,7 +197,7 @@ const CheckoutPage = () => {
           className="mt-12 text-center text-xs text-slate-500"
         >
           © {new Date().getFullYear()} Pirnav Edutech. All rights reserved. Need help?{" "}
-          <a href="#" className="text-cyan-400 hover:underline">
+          <a href="#" className={`hover:underline ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>
             Contact support
           </a>
         </motion.footer>

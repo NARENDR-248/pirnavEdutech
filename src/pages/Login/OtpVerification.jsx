@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Shield, CheckCircle, ArrowRight, Info, Smartphone } from 'lucide-react'
+import { ArrowLeft, Shield, CheckCircle, ArrowRight, Info, Smartphone, Moon, Sun } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useThemeContext } from '../../context/ThemeContext'
 
 const OTP_LENGTH = 6
 const RESEND_DELAY = 60
@@ -10,6 +11,7 @@ export default function OtpVerification() {
   const navigate = useNavigate()
   const location = useLocation()
   const email = location.state?.email || 'your email'
+  const { isDark, toggle: toggleTheme } = useThemeContext()
 
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''))
   const inputRefs = useRef([])
@@ -93,23 +95,44 @@ export default function OtpVerification() {
   }
 
   return (
-    <div className="min-h-screen bg-[#070711] flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-blue-600/20 blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-[480px] h-[480px] rounded-full bg-purple-600/15 blur-[140px] pointer-events-none" />
+    <div className={`min-h-screen flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300 ${isDark ? 'bg-[#070711]' : 'bg-slate-50'}`}>
+      {isDark && <>
+        <div className="absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-blue-600/20 blur-[140px] pointer-events-none" />
+        <div className="absolute -bottom-40 -right-40 w-[480px] h-[480px] rounded-full bg-purple-600/15 blur-[140px] pointer-events-none" />
+      </>}
+
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className={`absolute top-5 right-5 z-50 p-2.5 rounded-xl border transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+          isDark
+            ? "bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.12]"
+            : "bg-white border-slate-200 hover:bg-slate-100 hover:border-slate-300 shadow-sm"
+        }`}
+        aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      >
+        {isDark ? (
+          <Sun className="w-4 h-4 text-amber-400" />
+        ) : (
+          <Moon className="w-4 h-4 text-slate-500" />
+        )}
+      </button>
 
       <div className="w-full max-w-md relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[24px] p-8 shadow-2xl"
-          style={{ boxShadow: '0 32px 80px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.06)' }}
+          className={`backdrop-blur-2xl border rounded-[24px] p-8 shadow-2xl transition-colors duration-300 ${
+            isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200'
+          }`}
+          style={{ boxShadow: isDark ? '0 32px 80px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.06)' : '0 4px 24px rgba(0,0,0,0.06)' }}
         >
           {/* Logo */}
           <div className="flex items-center gap-3 mb-8">
             <div className="w-11 h-11 rounded-xl bg-gradient-to-r from-[#2563EB] to-[#7C3AED] flex items-center justify-center">
               <span className="text-white font-bold text-lg">H</span>
             </div>
-            <h2 className="text-xl font-bold text-white">
+            <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
               HRMS<span className="text-blue-400"> Portal</span>
             </h2>
           </div>
@@ -117,7 +140,7 @@ export default function OtpVerification() {
           {/* Back */}
           <button
             onClick={() => navigate('/forgot-password')}
-            className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-all mb-6 group"
+            className={`flex items-center gap-2 text-sm transition-all mb-6 group ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-900'}`}
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
             Back
@@ -153,8 +176,8 @@ export default function OtpVerification() {
                 >
                   <CheckCircle className="w-10 h-10 text-[#10B981]" />
                 </motion.div>
-                <h2 className="text-2xl font-bold text-white mb-2">Verified!</h2>
-                <p className="text-slate-400 text-sm">Redirecting to set new password...</p>
+                <h2 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Verified!</h2>
+                <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Redirecting to set new password...</p>
               </motion.div>
             ) : (
               /* ── OTP Form ── */
@@ -164,10 +187,10 @@ export default function OtpVerification() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <h1 className="text-2xl font-bold text-white mb-2">Verification code</h1>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                <h1 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Verification code</h1>
+                <p className={`text-sm leading-relaxed mb-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                   Enter the 6-digit code sent to{' '}
-                  <span className="text-white font-medium">{email}</span>
+                  <span className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>{email}</span>
                 </p>
 
                 {/* Info Banner */}
@@ -246,7 +269,7 @@ export default function OtpVerification() {
             )}
           </AnimatePresence>
 
-          <p className="text-center text-sm text-slate-500 mt-6 pt-6 border-t border-white/5">
+          <p className={`text-center text-sm mt-6 pt-6 ${isDark ? 'text-slate-500 border-t border-white/5' : 'text-slate-400 border-t border-slate-200'}`}>
             {verified ? '' : 'Wrong email? '}
             {!verified && (
               <button onClick={() => navigate('/forgot-password')} className="text-[#2563EB] hover:text-blue-400 font-medium transition-colors">

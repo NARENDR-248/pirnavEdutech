@@ -12,12 +12,25 @@ import FAQ from "../components/admissions/FAQ";
 
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
+<<<<<<< HEAD
 
 
 export default function Admissions() {
   return (
     <main
       className="min-h-[100vh] font-sans antialiased bg-[#030B24] text-slate-100 overflow-x-hidden selection:bg-purple-500/30 selection:text-purple-200"
+=======
+import { useThemeContext } from "../context/ThemeContext";
+
+
+export default function Admissions() {
+  const { isDark } = useThemeContext();
+  return (
+    <main
+      className={`min-h-[100vh] font-sans antialiased overflow-x-hidden selection:bg-purple-500/30 selection:text-purple-200 transition-colors duration-300 ${
+        isDark ? 'bg-[#030B24] text-slate-100' : 'bg-slate-50 text-slate-800'
+      }`}
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
       style={{
         fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
       }}

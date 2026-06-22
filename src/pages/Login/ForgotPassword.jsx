@@ -1,10 +1,19 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+<<<<<<< HEAD
 import { Mail, ArrowLeft, CheckCircle, Shield, ArrowRight, AlertCircle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 export default function ForgotPasswordPage() {
+=======
+import { Mail, ArrowLeft, CheckCircle, Shield, ArrowRight, AlertCircle, Moon, Sun } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { useThemeContext } from '../../context/ThemeContext'
+
+export default function ForgotPasswordPage() {
+  const { isDark, toggle: toggleTheme } = useThemeContext();
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
@@ -47,17 +56,50 @@ export default function ForgotPasswordPage() {
   }, [])
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-[#070711] flex items-center justify-center p-4 relative overflow-hidden">
       {/* Ambient glows */}
       <div className="absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-blue-600/20 blur-[140px] pointer-events-none" />
       <div className="absolute -bottom-40 -right-40 w-[480px] h-[480px] rounded-full bg-purple-600/15 blur-[140px] pointer-events-none" />
+=======
+    <div className={`min-h-screen flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300 ${isDark ? 'bg-[#070711]' : 'bg-slate-50'}`}>
+      {/* Ambient glows */}
+      {isDark && <>
+        <div className="absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-blue-600/20 blur-[140px] pointer-events-none" />
+        <div className="absolute -bottom-40 -right-40 w-[480px] h-[480px] rounded-full bg-purple-600/15 blur-[140px] pointer-events-none" />
+      </>}
+
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className={`absolute top-5 right-5 z-50 p-2.5 rounded-xl border transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+          isDark
+            ? "bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.12]"
+            : "bg-white border-slate-200 hover:bg-slate-100 hover:border-slate-300 shadow-sm"
+        }`}
+        aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      >
+        {isDark ? (
+          <Sun className="w-4 h-4 text-amber-400" />
+        ) : (
+          <Moon className="w-4 h-4 text-slate-500" />
+        )}
+      </button>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
 
       <div className="w-full max-w-md relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
+<<<<<<< HEAD
           className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[24px] p-8 shadow-2xl"
           style={{ boxShadow: '0 32px 80px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.06)' }}
+=======
+          className={`backdrop-blur-2xl border rounded-[24px] p-8 shadow-2xl transition-colors duration-300 ${
+            isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200'
+          }`}
+          style={{ boxShadow: isDark ? '0 32px 80px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.06)' : '0 4px 24px rgba(0,0,0,0.06)' }}
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
         >
           {/* Logo */}
           <div className="flex items-center gap-3 mb-8">
@@ -67,7 +109,11 @@ export default function ForgotPasswordPage() {
             >
               <span className="text-white font-bold text-lg">H</span>
             </div>
+<<<<<<< HEAD
             <h2 className="text-xl font-bold text-white">
+=======
+            <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
               HRMS<span className="text-blue-400"> Portal</span>
             </h2>
           </div>
@@ -75,7 +121,11 @@ export default function ForgotPasswordPage() {
           {/* Back Button */}
           <button
             onClick={() => navigate('/login')}
+<<<<<<< HEAD
             className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-all mb-6 group"
+=======
+            className={`flex items-center gap-2 text-sm transition-all mb-6 group ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-900'}`}
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
             Back to Sign In
@@ -105,10 +155,17 @@ export default function ForgotPasswordPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
               >
+<<<<<<< HEAD
                 <h1 className="text-2xl font-bold text-white mb-2">Check your email</h1>
                 <p className="text-slate-400 text-sm leading-relaxed mb-8">
                   We've sent a 6-digit verification code to{' '}
                   <span className="text-white font-medium">{email}</span>
+=======
+                <h1 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Check your email</h1>
+                <p className={`text-sm leading-relaxed mb-8 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  We've sent a 6-digit verification code to{' '}
+                  <span className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>{email}</span>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
                 </p>
 
                 <button
@@ -135,8 +192,13 @@ export default function ForgotPasswordPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
               >
+<<<<<<< HEAD
                 <h1 className="text-2xl font-bold text-white mb-2">Forgot password?</h1>
                 <p className="text-slate-400 text-sm leading-relaxed mb-8">
+=======
+                <h1 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Forgot password?</h1>
+                <p className={`text-sm leading-relaxed mb-8 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
                   No worries. Enter your email and we'll send you a reset code.
                 </p>
 
@@ -189,7 +251,11 @@ export default function ForgotPasswordPage() {
           </AnimatePresence>
 
           {/* Footer */}
+<<<<<<< HEAD
           <p className="text-center text-sm text-slate-500 mt-6 pt-6 border-t border-white/5">
+=======
+          <p className={`text-center text-sm mt-6 pt-6 ${isDark ? 'text-slate-500 border-t border-white/5' : 'text-slate-400 border-t border-slate-200'}`}>
+>>>>>>> 71c966e78455926f66c1ded608fbc5490d976ab1
             Remember your password?{' '}
             <button onClick={() => navigate('/login')} className="text-[#2563EB] hover:text-blue-400 font-medium transition-colors">
               Sign In
